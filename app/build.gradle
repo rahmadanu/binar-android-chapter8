@@ -53,6 +53,7 @@ dependencies {
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation "androidx.fragment:fragment-ktx:1.5.3"
 
     // Database encryption
     implementation "net.zetetic:android-database-sqlcipher:4.4.0"
