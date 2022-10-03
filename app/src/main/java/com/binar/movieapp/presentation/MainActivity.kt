@@ -1,9 +1,10 @@
-package com.binar.movieapp
+package com.binar.movieapp.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.binar.movieapp.R
 
 class MainActivity : AppCompatActivity() {
 
