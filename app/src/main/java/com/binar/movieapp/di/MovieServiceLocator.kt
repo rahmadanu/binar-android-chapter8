@@ -1,8 +1,8 @@
 package com.binar.movieapp.di
 
 import android.content.Context
-import com.binar.movieapp.data.network.datasource.MovieDataSource
-import com.binar.movieapp.data.network.datasource.MovieDataSourceImpl
+import com.binar.movieapp.data.network.datasource.MovieRemoteDataSource
+import com.binar.movieapp.data.network.datasource.MovieRemoteDataSourceImpl
 import com.binar.movieapp.data.network.service.MovieApiService
 import com.binar.movieapp.data.repository.MovieRepository
 import com.binar.movieapp.data.repository.MovieRepositoryImpl
@@ -18,8 +18,8 @@ object MovieServiceLocator {
         return MovieApiService.invoke(chuckerInterceptor)
     }
 
-    private fun provideDataSource(apiService: MovieApiService): MovieDataSource {
-        return MovieDataSourceImpl(apiService)
+    private fun provideDataSource(apiService: MovieApiService): MovieRemoteDataSource {
+        return MovieRemoteDataSourceImpl(apiService)
     }
 
     fun provideMovieRepository(context: Context): MovieRepository {

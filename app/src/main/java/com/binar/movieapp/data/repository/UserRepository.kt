@@ -1,6 +1,6 @@
 package com.binar.movieapp.data.repository
 
-import com.binar.movieapp.data.local.database.user.UserDataSource
+import com.binar.movieapp.data.local.database.user.UserLocalDataSource
 import com.binar.movieapp.data.model.user.UserEntity
 import com.binar.movieapp.data.local.preference.UserPreferenceDataSource
 import com.binar.movieapp.wrapper.Resource
@@ -15,7 +15,7 @@ interface UserRepository {
 
 class UserRepositoryImpl(
     private val userPreferenceDataSource: UserPreferenceDataSource,
-    private val userDataSource: UserDataSource,
+    private val userDataSource: UserLocalDataSource,
 ): UserRepository {
     override fun checkIfUserLoggedIn(): Boolean {
         return userPreferenceDataSource.getIfUserLogin()

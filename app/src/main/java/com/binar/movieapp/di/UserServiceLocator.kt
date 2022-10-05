@@ -3,8 +3,8 @@ package com.binar.movieapp.di
 import android.content.Context
 import com.binar.movieapp.data.local.database.AppDatabase
 import com.binar.movieapp.data.local.database.user.UserDao
-import com.binar.movieapp.data.local.database.user.UserDataSource
-import com.binar.movieapp.data.local.database.user.UserDataSourceImpl
+import com.binar.movieapp.data.local.database.user.UserLocalDataSource
+import com.binar.movieapp.data.local.database.user.UserLocalDataSourceImpl
 import com.binar.movieapp.data.local.preference.UserPreference
 import com.binar.movieapp.data.local.preference.UserPreferenceDataSource
 import com.binar.movieapp.data.local.preference.UserPreferenceDataSourceImpl
@@ -29,8 +29,8 @@ object UserServiceLocator {
         return provideAppDatabase(context).userDao()
     }
 
-    private fun provideUserDataSource(context: Context): UserDataSource {
-        return UserDataSourceImpl(provideUserDao(context))
+    private fun provideUserDataSource(context: Context): UserLocalDataSource {
+        return UserLocalDataSourceImpl(provideUserDao(context))
     }
 
     fun provideUserRepository(context: Context): UserRepository {
