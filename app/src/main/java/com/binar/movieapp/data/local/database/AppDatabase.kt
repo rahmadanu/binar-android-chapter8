@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.binar.movieapp.data.local.database.user.UserDao
-import com.binar.movieapp.data.local.database.user.UserEntity
+import com.binar.movieapp.data.model.user.UserEntity
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 

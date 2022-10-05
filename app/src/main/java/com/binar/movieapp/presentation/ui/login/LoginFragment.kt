@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
-import com.binar.movieapp.data.local.database.user.UserEntity
+import com.binar.movieapp.data.model.user.UserEntity
 import com.binar.movieapp.databinding.FragmentLoginBinding
-import com.binar.movieapp.di.ServiceLocator
+import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.wrapper.Resource
 
@@ -22,7 +21,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: LoginViewModel by viewModelFactory {
-        LoginViewModel(ServiceLocator.provideServiceLocator(requireContext()))
+        LoginViewModel(UserServiceLocator.provideUserRepository(requireContext()))
     }
 
     private var args: String? = ""

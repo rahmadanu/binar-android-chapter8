@@ -1,4 +1,4 @@
-package com.binar.movieapp.presentation
+package com.binar.movieapp.presentation.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

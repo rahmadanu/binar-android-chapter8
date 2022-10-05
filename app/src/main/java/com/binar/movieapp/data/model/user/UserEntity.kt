@@ -1,4 +1,4 @@
-package com.binar.movieapp.data.local.database.user
+package com.binar.movieapp.data.model.user
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

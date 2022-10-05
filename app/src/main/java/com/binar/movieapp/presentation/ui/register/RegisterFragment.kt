@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
-import com.binar.movieapp.data.local.database.user.UserEntity
+import com.binar.movieapp.data.model.user.UserEntity
 import com.binar.movieapp.databinding.FragmentRegisterBinding
-import com.binar.movieapp.di.ServiceLocator
+import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.util.viewModelFactory
 
 class RegisterFragment : Fragment() {
@@ -19,7 +19,7 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: RegisterViewModel by viewModelFactory {
-        RegisterViewModel(ServiceLocator.provideServiceLocator(requireContext()))
+        RegisterViewModel(UserServiceLocator.provideUserRepository(requireContext()))
     }
 
     override fun onCreateView(

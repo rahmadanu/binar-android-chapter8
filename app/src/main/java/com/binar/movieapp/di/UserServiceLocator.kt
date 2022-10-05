@@ -8,10 +8,10 @@ import com.binar.movieapp.data.local.database.user.UserDataSourceImpl
 import com.binar.movieapp.data.local.preference.UserPreference
 import com.binar.movieapp.data.local.preference.UserPreferenceDataSource
 import com.binar.movieapp.data.local.preference.UserPreferenceDataSourceImpl
-import com.binar.movieapp.data.repository.LocalRepository
-import com.binar.movieapp.data.repository.LocalRepositoryImpl
+import com.binar.movieapp.data.repository.UserRepository
+import com.binar.movieapp.data.repository.UserRepositoryImpl
 
-object ServiceLocator {
+object UserServiceLocator {
 
     private fun provideUserPreference(context: Context): UserPreference {
         return UserPreference(context)
@@ -33,8 +33,8 @@ object ServiceLocator {
         return UserDataSourceImpl(provideUserDao(context))
     }
 
-    fun provideServiceLocator(context: Context): LocalRepository {
-        return LocalRepositoryImpl(
+    fun provideUserRepository(context: Context): UserRepository {
+        return UserRepositoryImpl(
             provideUserPreferenceDataSource(context),
             provideUserDataSource(context)
         )
