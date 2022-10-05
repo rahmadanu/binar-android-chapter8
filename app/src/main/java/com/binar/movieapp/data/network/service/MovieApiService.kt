@@ -23,6 +23,7 @@ interface MovieApiService {
         private const val LANGUAGE_US = "en-US"
         private const val PAGE = 1
 
+        @JvmStatic
         operator fun invoke(chuckerInterceptor: ChuckerInterceptor): MovieApiService {
             val authInterceptor = Interceptor {
                 val originRequest = it.request()

@@ -5,13 +5,13 @@ import com.binar.movieapp.data.network.datasource.MovieRemoteDataSource
 import com.binar.movieapp.wrapper.Resource
 
 interface MovieRepository {
-    suspend fun getPopular(language: String, page: Int): Resource<Popular>
+    suspend fun getPopular(): Resource<Popular>
 }
 
 class MovieRepositoryImpl(private val dataSource: MovieRemoteDataSource): MovieRepository {
-    override suspend fun getPopular(language: String, page: Int): Resource<Popular> {
+    override suspend fun getPopular(): Resource<Popular> {
         return proceed {
-            dataSource.getPopular(language, page)
+            dataSource.getPopular()
         }
     }
 
