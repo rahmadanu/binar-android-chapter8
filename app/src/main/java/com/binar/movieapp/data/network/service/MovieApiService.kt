@@ -2,6 +2,9 @@ package com.binar.movieapp.data.network.service
 
 import com.binar.movieapp.BuildConfig
 import com.binar.movieapp.data.model.HomeRecyclerViewItem
+import com.binar.movieapp.data.model.popular.Popular
+import com.binar.movieapp.data.model.search.Search
+import com.binar.movieapp.data.model.toprated.TopRated
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -17,17 +20,26 @@ interface MovieApiService {
     suspend fun getPopular(
         @Query("language") language: String = LANGUAGE_US,
         @Query("page") page: Int = PAGE
-    ): HomeRecyclerViewItem.Popular
+    ): Popular
 
     @GET(ApiEndPoints.TOP_RATED_END_POINT)
     suspend fun getTopRated(
         @Query("language") language: String = LANGUAGE_US,
         @Query("page") page: Int = PAGE
-    ): HomeRecyclerViewItem.TopRated
+    ): TopRated
+
+    @GET(ApiEndPoints.SEARCH_END_POINT)
+    suspend fun searchMovie(
+        @Query("language") language: String = LANGUAGE_US,
+        @Query("query", encoded = true) query: String,
+        @Query("page") page: Int = PAGE,
+        @Query("include_adult") include: Boolean = INCLUDE_ADULT
+    ): Search
 
     companion object {
         private const val LANGUAGE_US = "en-US"
         private const val PAGE = 1
+        private const val INCLUDE_ADULT = false
 
         @JvmStatic
         operator fun invoke(chuckerInterceptor: ChuckerInterceptor): MovieApiService {

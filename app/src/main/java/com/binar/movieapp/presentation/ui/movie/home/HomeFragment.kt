@@ -1,17 +1,25 @@
 package com.binar.movieapp.presentation.ui.movie.home
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.binar.movieapp.R
+import com.binar.movieapp.data.model.HomeMovie
 import com.binar.movieapp.data.model.HomeRecyclerViewItem
+import com.binar.movieapp.data.model.search.Search
 import com.binar.movieapp.databinding.FragmentHomeBinding
 import com.binar.movieapp.di.MovieServiceLocator
 import com.binar.movieapp.presentation.ui.movie.home.adapter.HomeAdapter
+import com.binar.movieapp.presentation.ui.movie.home.adapter.SearchAdapter
 import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.wrapper.Resource
 
@@ -36,58 +44,90 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setToolbar()
         fetchPopular()
+        setSearchRecyclerView()
         observeData()
+    }
+
+    private fun setToolbar() {
+        binding.toolbar.apply {
+            title = "MOVIEEEE"
+            inflateMenu(R.menu.menu_home)
+        }
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            when (item?.itemId) {
+                R.id.menu_action_search -> {
+                    val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+                    val searchView = item.actionView as SearchView
+                    searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+
+                    searchView.queryHint = getString(R.string.title_menu_search)
+                    searchView.setOnQueryTextListener(object : OnQueryTextListener {
+                        override fun onQueryTextSubmit(query: String): Boolean {
+                            viewModel.searchMovie(query)
+                            Log.d("query", query)
+                            return false
+                        }
+
+                        override fun onQueryTextChange(query: String?): Boolean {
+                            return true
+                        }
+                    })
+                }
+            }
+            false
+        }
     }
 
     private fun fetchPopular() {
         Log.d("homefragment", "fetching data..")
-        viewModel.getHomeListItems()
+        viewModel.getHomeMovieList()
     }
 
-    private fun setRecyclerView(movie: List<HomeRecyclerViewItem>?) {
+    private fun setHomeRecyclerView(movie: List<HomeMovie>?) {
         val adapter = HomeAdapter()
-        adapter.itemClickListener = { view, item, position ->
-            when (item) {
-                is HomeRecyclerViewItem.Title -> {
-                    Toast.makeText(requireContext(), "Title clicked", Toast.LENGTH_SHORT).show()
-                }
-                is HomeRecyclerViewItem.Popular -> {
-                    Toast.makeText(requireContext(), "Popular movie clicked", Toast.LENGTH_SHORT).show()
-                }
-                is HomeRecyclerViewItem.TopRated -> {
-                    Toast.makeText(requireContext(), "Top rated movie clicked", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        movie?.let { adapter.items = it }
+        adapter.submitList(movie)
+        Log.d("size", adapter.itemCount.toString())
         binding.apply {
-            rvList.layoutManager = LinearLayoutManager(requireContext())
-            rvList.adapter = adapter
+            rvHomeList.layoutManager = LinearLayoutManager(requireContext())
+            rvHomeList.adapter = adapter
         }
     }
 
     private fun observeData() {
-        viewModel.homeItemListResult.observe(viewLifecycleOwner) {
+        viewModel.homeMovieListResult.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {}
                 is Resource.Error -> {}
                 is Resource.Success -> {
-                    setRecyclerView(it.payload)
+                    setHomeRecyclerView(it.payload)
                     Log.d("homefragment", it.payload.toString())
+                }
+                else -> {}
+            }
+        }
+        viewModel.searchResult.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {}
+                is Resource.Error -> {}
+                is Resource.Empty -> {
+                    Toast.makeText(requireContext(), "Movie not found", Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Success -> {
+                    Log.d("search", it.payload.toString())
+                    setSearchRecyclerView(it.payload)
                 }
             }
         }
-        /*viewModel.getPopularResult.observe(viewLifecycleOwner) {
-            when (it) {
-                is Resource.Loading -> {}
-                is Resource.Error -> {}
-                is Resource.Success -> {
-                    setRecyclerView(it.payload)
-                    Log.d("homefragment", it.payload.toString())
-                }
-            }
-        }*/
+    }
+
+    private fun setSearchRecyclerView(list: Search? = null) {
+        val adapter = SearchAdapter()
+        Log.d("search", list?.results.toString())
+        adapter.setList(list?.results)
+        binding.rvSearchList.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvSearchList.adapter = adapter
     }
 
     override fun onDestroyView() {
