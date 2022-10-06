@@ -1,7 +1,7 @@
 package com.binar.movieapp.data.network.service
 
 import com.binar.movieapp.BuildConfig
-import com.binar.movieapp.data.model.popular.Popular
+import com.binar.movieapp.data.model.HomeRecyclerViewItem
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -17,7 +17,13 @@ interface MovieApiService {
     suspend fun getPopular(
         @Query("language") language: String = LANGUAGE_US,
         @Query("page") page: Int = PAGE
-    ): Popular
+    ): HomeRecyclerViewItem.Popular
+
+    @GET(ApiEndPoints.TOP_RATED_END_POINT)
+    suspend fun getTopRated(
+        @Query("language") language: String = LANGUAGE_US,
+        @Query("page") page: Int = PAGE
+    ): HomeRecyclerViewItem.TopRated
 
     companion object {
         private const val LANGUAGE_US = "en-US"

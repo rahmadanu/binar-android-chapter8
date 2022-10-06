@@ -2,14 +2,13 @@ package com.binar.movieapp.presentation.ui.movie.home
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.viewmodel.viewModelFactory
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.binar.movieapp.R
-import com.binar.movieapp.data.model.popular.Popular
+import com.binar.movieapp.data.model.HomeRecyclerViewItem
 import com.binar.movieapp.databinding.FragmentHomeBinding
 import com.binar.movieapp.di.MovieServiceLocator
 import com.binar.movieapp.presentation.ui.movie.home.adapter.HomeAdapter
@@ -43,20 +42,33 @@ class HomeFragment : Fragment() {
 
     private fun fetchPopular() {
         Log.d("homefragment", "fetching data..")
-        viewModel.getPopular()
+        viewModel.getHomeListItems()
     }
 
-    private fun setRecyclerView(movie: Popular?) {
+    private fun setRecyclerView(movie: List<HomeRecyclerViewItem>?) {
         val adapter = HomeAdapter()
-        adapter.setList(movie?.results)
+        adapter.itemClickListener = { view, item, position ->
+            when (item) {
+                is HomeRecyclerViewItem.Title -> {
+                    Toast.makeText(requireContext(), "Title clicked", Toast.LENGTH_SHORT).show()
+                }
+                is HomeRecyclerViewItem.Popular -> {
+                    Toast.makeText(requireContext(), "Popular movie clicked", Toast.LENGTH_SHORT).show()
+                }
+                is HomeRecyclerViewItem.TopRated -> {
+                    Toast.makeText(requireContext(), "Top rated movie clicked", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+        movie?.let { adapter.items = it }
         binding.apply {
-            rvList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            rvList.layoutManager = LinearLayoutManager(requireContext())
             rvList.adapter = adapter
         }
     }
 
     private fun observeData() {
-        viewModel.getPopularResult.observe(viewLifecycleOwner) {
+        viewModel.homeItemListResult.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {}
                 is Resource.Error -> {}
@@ -66,6 +78,16 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+        /*viewModel.getPopularResult.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Loading -> {}
+                is Resource.Error -> {}
+                is Resource.Success -> {
+                    setRecyclerView(it.payload)
+                    Log.d("homefragment", it.payload.toString())
+                }
+            }
+        }*/
     }
 
     override fun onDestroyView() {
