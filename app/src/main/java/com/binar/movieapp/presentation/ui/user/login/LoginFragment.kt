@@ -1,5 +1,6 @@
-package com.binar.movieapp.presentation.ui.login
+package com.binar.movieapp.presentation.ui.user.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
-import com.binar.movieapp.data.model.user.UserEntity
+import com.binar.movieapp.data.local.model.user.UserEntity
 import com.binar.movieapp.databinding.FragmentLoginBinding
 import com.binar.movieapp.di.UserServiceLocator
+import com.binar.movieapp.presentation.ui.movie.HomeActivity
 import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.wrapper.Resource
 
@@ -111,15 +113,24 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateToHome() {
-        val option = NavOptions.Builder()
+        val intent = Intent(requireContext(), HomeActivity::class.java).apply {
+            putExtra(EXTRA_USERNAME, args)
+        }
+        startActivity(intent)
+        activity?.finish()
+/*        val option = NavOptions.Builder()
             .setPopUpTo(R.id.loginFragment, true)
             .build()
         val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(args)
-        findNavController().navigate(action, option)
+        findNavController().navigate(action, option)*/
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val EXTRA_USERNAME = "extra_username"
     }
 }

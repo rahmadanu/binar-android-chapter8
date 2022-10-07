@@ -5,14 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.binar.movieapp.data.model.HomeMovie
-import com.binar.movieapp.data.model.HomeMovieItem
-import com.binar.movieapp.data.model.HomeRecyclerViewItem
-import com.binar.movieapp.data.model.search.Search
+import com.binar.movieapp.data.network.model.HomeMovie
+import com.binar.movieapp.data.network.model.detail.DetailMovie
+import com.binar.movieapp.data.network.model.search.Search
 import com.binar.movieapp.data.repository.MovieRepository
 import com.binar.movieapp.wrapper.Resource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: MovieRepository): ViewModel() {

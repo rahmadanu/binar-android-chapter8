@@ -1,6 +1,6 @@
 package com.binar.movieapp.data.local.database.user
 
-import com.binar.movieapp.data.model.user.UserEntity
+import com.binar.movieapp.data.local.model.user.UserEntity
 
 interface UserLocalDataSource {
     suspend fun registerUser(user: UserEntity): Long

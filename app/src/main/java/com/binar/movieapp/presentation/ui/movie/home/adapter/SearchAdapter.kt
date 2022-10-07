@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.binar.movieapp.data.model.search.SearchItem
+import com.binar.movieapp.data.network.model.search.SearchItem
 import com.binar.movieapp.databinding.ItemSearchMovieBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions

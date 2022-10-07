@@ -1,10 +1,10 @@
-package com.binar.movieapp.presentation.ui.login
+package com.binar.movieapp.presentation.ui.user.login
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.binar.movieapp.data.model.user.UserEntity
+import com.binar.movieapp.data.local.model.user.UserEntity
 import com.binar.movieapp.data.repository.UserRepository
 import com.binar.movieapp.wrapper.Resource
 import kotlinx.coroutines.launch

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.binar.movieapp.presentation.ui.movie.home.HomeFragment"
+        tools:layout="@layout/fragment_home"
+        android:label="Home">
+        <action
+            android:id="@+id/action_homeFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.binar.movieapp.presentation.ui.movie.detail.DetailFragment"
+        tools:layout="@layout/fragment_detail"
+        android:label="Detail" >
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.binar.movieapp.presentation.ui.user.profile.ProfileFragment"
+        tools:layout="@layout/fragment_profile"
+        android:label="Profile" />
+</navigation>

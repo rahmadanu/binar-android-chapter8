@@ -3,7 +3,7 @@ package com.binar.movieapp.data.local.database.user
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.binar.movieapp.data.model.user.UserEntity
+import com.binar.movieapp.data.local.model.user.UserEntity
 
 @Dao
 interface UserDao {

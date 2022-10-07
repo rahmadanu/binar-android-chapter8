@@ -1,9 +1,8 @@
-package com.binar.movieapp.data.model.search
-
+package com.binar.movieapp.data.network.model.toprated
 
 import com.google.gson.annotations.SerializedName
 
-data class SearchItem(
+data class TopRatedItem(
     @SerializedName("adult")
     val adult: Boolean? = null,
     @SerializedName("backdrop_path")

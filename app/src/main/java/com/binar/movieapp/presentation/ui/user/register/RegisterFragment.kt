@@ -1,4 +1,4 @@
-package com.binar.movieapp.presentation.ui.register
+package com.binar.movieapp.presentation.ui.user.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
-import com.binar.movieapp.data.model.user.UserEntity
+import com.binar.movieapp.data.local.model.user.UserEntity
 import com.binar.movieapp.databinding.FragmentRegisterBinding
 import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.util.viewModelFactory
@@ -47,9 +48,17 @@ class RegisterFragment : Fragment() {
                 password = binding.etPassword.text.toString()
             )
             viewModel.registerUser(user)
-            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
-            Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show()
+            navigateToLogin()
         }
+    }
+
+    private fun navigateToLogin() {
+        val option = NavOptions.Builder()
+            .setPopUpTo(R.id.registerFragment, true)
+            .build()
+        val action = RegisterFragmentDirections.actionRegisterFragmentToLoginFragment()
+        findNavController().navigate(action, option)
+        Toast.makeText(context, "Register Success", Toast.LENGTH_SHORT).show()
     }
 
     private fun validateInput(): Boolean {

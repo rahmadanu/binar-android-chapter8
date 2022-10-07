@@ -1,16 +1,17 @@
 package com.binar.movieapp.data.network.service
 
 import com.binar.movieapp.BuildConfig
-import com.binar.movieapp.data.model.HomeRecyclerViewItem
-import com.binar.movieapp.data.model.popular.Popular
-import com.binar.movieapp.data.model.search.Search
-import com.binar.movieapp.data.model.toprated.TopRated
+import com.binar.movieapp.data.network.model.detail.DetailMovie
+import com.binar.movieapp.data.network.model.popular.Popular
+import com.binar.movieapp.data.network.model.search.Search
+import com.binar.movieapp.data.network.model.toprated.TopRated
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
@@ -35,6 +36,12 @@ interface MovieApiService {
         @Query("page") page: Int = PAGE,
         @Query("include_adult") include: Boolean = INCLUDE_ADULT
     ): Search
+
+    @GET(ApiEndPoints.DETAIL_END_POINT)
+    suspend fun getDetail(
+        @Path("movie_id") id: Int,
+        @Query("language") language: String = LANGUAGE_US
+    ): DetailMovie
 
     companion object {
         private const val LANGUAGE_US = "en-US"

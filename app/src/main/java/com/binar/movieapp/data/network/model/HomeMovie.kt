@@ -1,7 +1,5 @@
-package com.binar.movieapp.data.model
+package com.binar.movieapp.data.network.model
 
-import com.binar.movieapp.data.model.popular.PopularItem
-import com.binar.movieapp.data.model.toprated.TopRatedItem
 import com.google.gson.annotations.SerializedName
 
 class HomeMovie(

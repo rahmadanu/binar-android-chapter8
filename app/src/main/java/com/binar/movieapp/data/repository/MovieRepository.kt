@@ -1,18 +1,16 @@
 package com.binar.movieapp.data.repository
 
-import com.binar.movieapp.data.model.HomeMovieItem
-import com.binar.movieapp.data.model.HomeRecyclerViewItem
-import com.binar.movieapp.data.model.popular.Popular
-import com.binar.movieapp.data.model.search.Search
-import com.binar.movieapp.data.model.toprated.TopRated
+import com.binar.movieapp.data.network.model.HomeMovieItem
+import com.binar.movieapp.data.network.model.search.Search
 import com.binar.movieapp.data.network.datasource.MovieRemoteDataSource
+import com.binar.movieapp.data.network.model.detail.DetailMovie
 import com.binar.movieapp.wrapper.Resource
-import com.google.gson.annotations.SerializedName
 
 interface MovieRepository {
     suspend fun getPopular(): Resource<List<HomeMovieItem>>
     suspend fun getTopRated(): Resource<List<HomeMovieItem>>
     suspend fun searchMovie(query: String): Resource<Search>
+    suspend fun getDetail(id: Int): Resource<DetailMovie>
 }
 
 class MovieRepositoryImpl(private val dataSource: MovieRemoteDataSource): MovieRepository {
@@ -66,6 +64,12 @@ class MovieRepositoryImpl(private val dataSource: MovieRemoteDataSource): MovieR
             if (data.results.isNullOrEmpty()) Resource.Empty() else Resource.Success(data)
         } catch (exception: Exception) {
             Resource.Error(exception)
+        }
+    }
+
+    override suspend fun getDetail(id: Int): Resource<DetailMovie> {
+        return proceed {
+            dataSource.getDetail(id)
         }
     }
 

@@ -5,12 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.binar.movieapp.data.model.HomeMovieItem
+import com.binar.movieapp.data.network.model.HomeMovieItem
 import com.binar.movieapp.databinding.ItemPosterBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 class HomePosterAdapter : RecyclerView.Adapter<HomePosterAdapter.HomePosterViewHolder>() {
+
+    var itemClickListener: ((item: HomeMovieItem) -> Unit)? = null
 
     private val diffCallback = object : DiffUtil.ItemCallback<HomeMovieItem>() {
         override fun areItemsTheSame(oldItem: HomeMovieItem, newItem: HomeMovieItem): Boolean {
@@ -39,7 +41,7 @@ class HomePosterAdapter : RecyclerView.Adapter<HomePosterAdapter.HomePosterViewH
 
     override fun getItemCount(): Int = differ.currentList.size
 
-    class HomePosterViewHolder(private val binding: ItemPosterBinding) :
+    inner class HomePosterViewHolder(private val binding: ItemPosterBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HomeMovieItem) {
             with(binding) {
@@ -47,10 +49,13 @@ class HomePosterAdapter : RecyclerView.Adapter<HomePosterAdapter.HomePosterViewH
                     .load(IMAGE_URL + item.posterPath)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(ivPoster)
+
+                itemView.setOnClickListener {
+                    itemClickListener?.invoke(item)
+                }
             }
         }
     }
-
 
     companion object {
         private const val IMAGE_URL = "https://image.tmdb.org/t/p/w500"

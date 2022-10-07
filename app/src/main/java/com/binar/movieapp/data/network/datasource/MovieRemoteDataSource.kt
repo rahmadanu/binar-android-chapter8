@@ -1,14 +1,16 @@
 package com.binar.movieapp.data.network.datasource
 
-import com.binar.movieapp.data.model.popular.Popular
-import com.binar.movieapp.data.model.search.Search
-import com.binar.movieapp.data.model.toprated.TopRated
+import com.binar.movieapp.data.network.model.detail.DetailMovie
+import com.binar.movieapp.data.network.model.popular.Popular
+import com.binar.movieapp.data.network.model.search.Search
+import com.binar.movieapp.data.network.model.toprated.TopRated
 import com.binar.movieapp.data.network.service.MovieApiService
 
 interface MovieRemoteDataSource {
     suspend fun getPopular(): Popular
     suspend fun getTopRated(): TopRated
     suspend fun searchMovie(query: String): Search
+    suspend fun getDetail(id: Int): DetailMovie
 }
 
 class MovieRemoteDataSourceImpl(private val apiService: MovieApiService): MovieRemoteDataSource {
@@ -22,6 +24,10 @@ class MovieRemoteDataSourceImpl(private val apiService: MovieApiService): MovieR
 
     override suspend fun searchMovie(query: String): Search {
         return apiService.searchMovie(query = query)
+    }
+
+    override suspend fun getDetail(id: Int): DetailMovie {
+        return apiService.getDetail(id)
     }
 
 }

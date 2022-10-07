@@ -1,6 +1,5 @@
-package com.binar.movieapp.data.model.popular
+package com.binar.movieapp.data.network.model.popular
 
-import com.binar.movieapp.data.model.HomeRecyclerViewItem
 import com.google.gson.annotations.SerializedName
 
 data class Popular(

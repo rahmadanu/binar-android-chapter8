@@ -11,11 +11,11 @@ import android.widget.SearchView
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.movieapp.R
-import com.binar.movieapp.data.model.HomeMovie
-import com.binar.movieapp.data.model.HomeRecyclerViewItem
-import com.binar.movieapp.data.model.search.Search
+import com.binar.movieapp.data.network.model.HomeMovie
+import com.binar.movieapp.data.network.model.search.Search
 import com.binar.movieapp.databinding.FragmentHomeBinding
 import com.binar.movieapp.di.MovieServiceLocator
 import com.binar.movieapp.presentation.ui.movie.home.adapter.HomeAdapter
@@ -88,7 +88,11 @@ class HomeFragment : Fragment() {
     private fun setHomeRecyclerView(movie: List<HomeMovie>?) {
         val adapter = HomeAdapter()
         adapter.submitList(movie)
-        Log.d("size", adapter.itemCount.toString())
+        adapter.itemClickListener = {
+            val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.id!!)
+            findNavController().navigate(action)
+        }
+
         binding.apply {
             rvHomeList.layoutManager = LinearLayoutManager(requireContext())
             rvHomeList.adapter = adapter

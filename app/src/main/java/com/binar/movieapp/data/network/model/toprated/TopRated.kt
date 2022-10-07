@@ -1,6 +1,5 @@
-package com.binar.movieapp.data.model.toprated
+package com.binar.movieapp.data.network.model.toprated
 
-import com.binar.movieapp.data.model.HomeRecyclerViewItem
 import com.google.gson.annotations.SerializedName
 
 data class TopRated(
