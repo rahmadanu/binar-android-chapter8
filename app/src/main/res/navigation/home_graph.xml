@@ -30,5 +30,6 @@
         android:id="@+id/profileFragment"
         android:name="com.binar.movieapp.presentation.ui.user.profile.ProfileFragment"
         tools:layout="@layout/fragment_profile"
-        android:label="Profile" />
+        android:label="Profile" >
+    </fragment>
 </navigation>

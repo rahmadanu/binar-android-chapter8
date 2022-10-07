@@ -9,6 +9,7 @@ import com.binar.movieapp.wrapper.Resource
 interface MovieRepository {
     suspend fun getPopular(): Resource<List<HomeMovieItem>>
     suspend fun getTopRated(): Resource<List<HomeMovieItem>>
+    suspend fun getUpcoming(): Resource<List<HomeMovieItem>>
     suspend fun searchMovie(query: String): Resource<Search>
     suspend fun getDetail(id: Int): Resource<DetailMovie>
 }
@@ -39,6 +40,28 @@ class MovieRepositoryImpl(private val dataSource: MovieRemoteDataSource): MovieR
     override suspend fun getTopRated(): Resource<List<HomeMovieItem>> {
         return proceed {
             dataSource.getTopRated().results?.map {
+                HomeMovieItem(
+                    adult = it.adult,
+                    backdropPath = it.backdropPath,
+                    genreIds = it.genreIds,
+                    id = it.id,
+                    originalLanguage = it.originalLanguage,
+                    originalTitle = it.originalTitle,
+                    overview = it.overview,
+                    popularity = it.popularity,
+                    posterPath = it.posterPath,
+                    releaseDate = it.releaseDate,
+                    title = it.title,
+                    video = it.video,
+                    voteAverage = it.voteAverage,
+                    voteCount = it.voteCount
+                ) }!!
+        }
+    }
+
+    override suspend fun getUpcoming(): Resource<List<HomeMovieItem>> {
+        return proceed {
+            dataSource.getUpcoming().results?.map {
                 HomeMovieItem(
                     adult = it.adult,
                     backdropPath = it.backdropPath,

@@ -25,10 +25,12 @@ class HomeViewModel(private val repository: MovieRepository): ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             val popular = repository.getPopular()
             val topRated = repository.getTopRated()
+            val upcoming = repository.getUpcoming()
 
             val homeMovieList = mutableListOf<HomeMovie>()
-            homeMovieList.add(HomeMovie(title = "Popular cui", results = popular.payload))
-            homeMovieList.add(HomeMovie(title = "Top Rated oy", results = topRated.payload))
+            homeMovieList.add(HomeMovie(title = "Popular", results = popular.payload))
+            homeMovieList.add(HomeMovie(title = "Top Rated", results = topRated.payload))
+            homeMovieList.add(HomeMovie(title = "Upcoming", results = upcoming.payload))
             viewModelScope.launch(Dispatchers.Main) {
                 _homeMovieListResult.postValue(Resource.Success(homeMovieList))
             }

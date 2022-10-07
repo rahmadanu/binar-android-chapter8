@@ -5,6 +5,7 @@ import com.binar.movieapp.data.network.model.detail.DetailMovie
 import com.binar.movieapp.data.network.model.popular.Popular
 import com.binar.movieapp.data.network.model.search.Search
 import com.binar.movieapp.data.network.model.toprated.TopRated
+import com.binar.movieapp.data.network.model.upcoming.Upcoming
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -28,6 +29,12 @@ interface MovieApiService {
         @Query("language") language: String = LANGUAGE_US,
         @Query("page") page: Int = PAGE
     ): TopRated
+
+    @GET(ApiEndPoints.UPCOMING_END_POINT)
+    suspend fun getUpcoming(
+        @Query("language") language: String = LANGUAGE_US,
+        @Query("page") page: Int = PAGE
+    ): Upcoming
 
     @GET(ApiEndPoints.SEARCH_END_POINT)
     suspend fun searchMovie(

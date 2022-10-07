@@ -11,6 +11,7 @@ import com.binar.movieapp.R
 import com.binar.movieapp.data.network.model.detail.DetailMovie
 import com.binar.movieapp.databinding.FragmentDetailBinding
 import com.binar.movieapp.di.MovieServiceLocator
+import com.binar.movieapp.presentation.ui.movie.HomeActivity
 import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.wrapper.Resource
 import com.bumptech.glide.Glide
@@ -39,6 +40,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //(activity as HomeActivity).supportActionBar.
         getData()
         observeData()
     }
