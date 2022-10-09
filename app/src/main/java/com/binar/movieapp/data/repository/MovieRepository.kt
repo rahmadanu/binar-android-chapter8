@@ -1,9 +1,9 @@
 package com.binar.movieapp.data.repository
 
-import com.binar.movieapp.data.network.model.HomeMovieItem
-import com.binar.movieapp.data.network.model.search.Search
 import com.binar.movieapp.data.network.datasource.MovieRemoteDataSource
+import com.binar.movieapp.data.network.model.HomeMovieItem
 import com.binar.movieapp.data.network.model.detail.DetailMovie
+import com.binar.movieapp.data.network.model.search.Search
 import com.binar.movieapp.wrapper.Resource
 
 interface MovieRepository {

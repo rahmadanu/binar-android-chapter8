@@ -7,7 +7,6 @@
     tools:context=".presentation.ui.movie.detail.DetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -23,9 +22,9 @@
 
         <TextView
             android:id="@+id/tv_movie_title"
-            style="@style/paddingHorizontal"
-            android:textAlignment="center"
-            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,8 +34,9 @@
 
         <TextView
             android:id="@+id/tv_tagline"
-            style="@style/paddingHorizontal"
-            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
             android:layout_marginTop="8dp"
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
@@ -46,8 +46,9 @@
 
         <TextView
             android:id="@+id/tv_genre_lang_release"
-            style="@style/paddingHorizontal"
-            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,8 +57,10 @@
 
         <TextView
             android:id="@+id/title_overview"
-            style="@style/paddingHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
+            android:paddingHorizontal="20dp"
             android:textSize="18sp"
             android:text="@string/title_overview"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,57 +69,14 @@
 
         <TextView
             android:id="@+id/tv_overview"
-            style="@style/paddingHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="20dp"
             android:paddingVertical="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_overview"
             tools:text="This is overview"/>
-
-        <TextView
-            android:id="@+id/tv_rating"
-            style="@style/paddingHorizontal"
-            android:paddingVertical="12dp"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_overview"
-            tools:text="Rating: 8.8"
-            app:drawableEndCompat="@drawable/ic_star"
-            android:drawablePadding="6dp"/>
-
-        <TextView
-            android:id="@+id/title_official_web"
-            style="@style/paddingHorizontal"
-            android:text="@string/title_official_website"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_rating" />
-
-        <TextView
-            android:id="@+id/tv_official_web"
-            style="@style/paddingHorizontal"
-            android:linksClickable="true"
-            android:autoLink="web"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_official_web"
-            tools:text="https://thegodfather.com"/>
-
-        <ProgressBar
-            android:id="@+id/pb_home_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Empty" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

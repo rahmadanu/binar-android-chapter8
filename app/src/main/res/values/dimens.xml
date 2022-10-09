@@ -2,4 +2,5 @@
 <resources>
 
     <dimen name="bottomMarginVertical">10dp</dimen>
+    <dimen name="paddingHorizontal">20dp</dimen>
 </resources>

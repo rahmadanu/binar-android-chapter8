@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.movieapp.R
 import com.binar.movieapp.data.network.model.HomeMovie
@@ -47,7 +44,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         getInitialUser()
-        //getMovieList()
         observeData()
     }
 
@@ -64,10 +60,6 @@ class HomeFragment : Fragment() {
                 ProfileFragment().arguments = arguments
             }
         }
-    }
-
-    private fun getMovieList() {
-        viewModel.getHomeMovieList()
     }
 
     private fun setHomeRecyclerView(movie: List<HomeMovie>?) {

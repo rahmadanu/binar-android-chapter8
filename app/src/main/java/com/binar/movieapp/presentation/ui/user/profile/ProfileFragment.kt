@@ -2,22 +2,18 @@ package com.binar.movieapp.presentation.ui.user.profile
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.binar.movieapp.R
 import com.binar.movieapp.data.local.model.user.UserEntity
 import com.binar.movieapp.databinding.FragmentProfileBinding
 import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.presentation.ui.user.MainActivity
 import com.binar.movieapp.util.viewModelFactory
-import com.binar.movieapp.wrapper.Resource
 
 class ProfileFragment : Fragment() {
 

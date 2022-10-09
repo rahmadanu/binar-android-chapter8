@@ -7,9 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
@@ -17,9 +14,6 @@ import com.binar.movieapp.data.local.model.user.UserEntity
 import com.binar.movieapp.databinding.FragmentRegisterBinding
 import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.util.viewModelFactory
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
 

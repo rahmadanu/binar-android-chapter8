@@ -1,8 +1,8 @@
 package com.binar.movieapp.data.repository
 
 import com.binar.movieapp.data.local.database.user.UserLocalDataSource
-import com.binar.movieapp.data.local.preference.UserPreferenceDataSource
 import com.binar.movieapp.data.local.model.user.UserEntity
+import com.binar.movieapp.data.local.preference.UserPreferenceDataSource
 import com.binar.movieapp.wrapper.Resource
 
 interface UserRepository {
