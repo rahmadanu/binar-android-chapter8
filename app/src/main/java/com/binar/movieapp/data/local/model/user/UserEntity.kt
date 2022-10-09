@@ -1,10 +1,13 @@
 package com.binar.movieapp.data.local.model.user
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "user_information")
+@Parcelize
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
     var userId: Long = 0,
@@ -16,5 +19,14 @@ data class UserEntity(
     var email: String,
 
     @ColumnInfo(name = "password")
-    var password: String? = ""
-)
+    var password: String? = "",
+
+    @ColumnInfo(name = "fullName")
+    var fullName: String? = "",
+
+    @ColumnInfo(name = "dateOfBirth")
+    var dateOfBirth: String? = "",
+
+    @ColumnInfo(name = "address")
+    var address: String? = ""
+): Parcelable

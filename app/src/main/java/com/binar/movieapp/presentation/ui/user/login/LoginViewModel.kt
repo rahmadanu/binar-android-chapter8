@@ -6,17 +6,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.binar.movieapp.data.local.model.user.UserEntity
 import com.binar.movieapp.data.repository.UserRepository
-import com.binar.movieapp.wrapper.Resource
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: UserRepository) : ViewModel(){
 
-    private var _getUserResult = MutableLiveData<Resource<UserEntity>>()
-    val getUserResult: LiveData<Resource<UserEntity>> get() = _getUserResult
+    private var _checkIsUserLoginValid = MutableLiveData<Boolean>()
+    val checkIsUserLoginValid: LiveData<Boolean> get() = _checkIsUserLoginValid
 
-    fun getUser(username: String) {
+    private var _getIfUserExistResult = MutableLiveData<Boolean>()
+    val getIfUserExistResult: LiveData<Boolean> get() = _getIfUserExistResult
+
+    private var _userByUsernameResult = MutableLiveData<UserEntity>()
+    val userByUsernameResult: LiveData<UserEntity> get() = _userByUsernameResult
+
+    fun checkIsUserLoginValid(username: String, password: String) {
         viewModelScope.launch {
-            _getUserResult.postValue(repository.getUser(username))
+            _checkIsUserLoginValid.postValue(repository.checkIsUserLoginValid(username, password))
+        }
+    }
+
+    fun getIfUserExist(username: String){
+        viewModelScope.launch {
+            _getIfUserExistResult.postValue(repository.getIfUserExists(username))
         }
     }
 
@@ -26,5 +37,17 @@ class LoginViewModel(private val repository: UserRepository) : ViewModel(){
 
     fun setIfUserLogin(userLoggedIn: Boolean){
         return repository.setIfUserLogin(userLoggedIn)
+    }
+
+    fun getUserByUsername(username: String) {
+        viewModelScope.launch {
+            _userByUsernameResult.postValue(repository.getUserByUsername(username))
+        }
+    }
+
+    fun setUserId(id: Long) {
+        viewModelScope.launch {
+            repository.setUserId(id)
+        }
     }
 }

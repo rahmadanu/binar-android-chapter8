@@ -20,10 +20,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_username"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        style="@style/CustomTextInputLayout"
+        android:paddingTop="30dp"
         android:hint="@string/username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_register">
@@ -37,10 +35,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        style="@style/CustomTextInputLayout"
         android:hint="@string/hint_email"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_username">
@@ -54,10 +49,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        style="@style/CustomTextInputLayout"
         android:hint="@string/hint_password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_email"
@@ -72,10 +64,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_confirm_password"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        style="@style/CustomTextInputLayout"
         android:hint="@string/hint_confirm_password"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/til_password"

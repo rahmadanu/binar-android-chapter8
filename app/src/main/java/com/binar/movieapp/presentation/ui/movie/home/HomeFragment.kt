@@ -1,29 +1,24 @@
 package com.binar.movieapp.presentation.ui.movie.home
 
-import android.app.SearchManager
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
-import android.widget.SearchView.OnQueryTextListener
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.movieapp.R
 import com.binar.movieapp.data.network.model.HomeMovie
-import com.binar.movieapp.data.network.model.search.Search
 import com.binar.movieapp.databinding.FragmentHomeBinding
 import com.binar.movieapp.di.MovieServiceLocator
-import com.binar.movieapp.presentation.ui.movie.HomeActivity
+import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.presentation.ui.movie.home.adapter.HomeAdapter
-import com.binar.movieapp.presentation.ui.movie.home.adapter.SearchAdapter
+import com.binar.movieapp.presentation.ui.user.profile.ProfileFragment
 import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.wrapper.Resource
 
@@ -33,7 +28,10 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: HomeViewModel by viewModelFactory {
-        HomeViewModel(MovieServiceLocator.provideMovieRepository(requireContext()))
+        HomeViewModel(
+            MovieServiceLocator.provideMovieRepository(requireContext()),
+            UserServiceLocator.provideUserRepository(requireContext())
+        )
     }
 
     override fun onCreateView(
@@ -48,13 +46,27 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fetchPopular()
-        setSearchRecyclerView()
+        getInitialUser()
+        //getMovieList()
         observeData()
     }
 
-    private fun fetchPopular() {
-        Log.d("homefragment", "fetching data..")
+    private fun getInitialUser() {
+        val userId = viewModel.getUserId()
+        Log.d("inituser", userId.toString())
+        viewModel.getUserById(userId)
+        viewModel.userByIdResult.observe(viewLifecycleOwner) {
+            it?.let { binding.tvUsername.text = it.username
+                Log.d("inituser", it.username.toString())}
+        }
+        findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
+            if (destination.id == R.id.profileFragment) {
+                ProfileFragment().arguments = arguments
+            }
+        }
+    }
+
+    private fun getMovieList() {
         viewModel.getHomeMovieList()
     }
 
@@ -70,41 +82,41 @@ class HomeFragment : Fragment() {
             rvHomeList.layoutManager = LinearLayoutManager(requireContext())
             rvHomeList.adapter = adapter
         }
+        viewModel.listStateParcel?.let { parcelable ->
+            binding.rvHomeList.layoutManager?.onRestoreInstanceState(parcelable)
+            viewModel.listStateParcel = null
+        }
     }
 
     private fun observeData() {
         viewModel.homeMovieListResult.observe(viewLifecycleOwner) {
             when (it) {
-                is Resource.Loading -> {}
-                is Resource.Error -> {}
+                is Resource.Loading -> {
+                    setLoadingState(true)
+                    setErrorState(false)
+                }
+                is Resource.Error -> {
+                    setLoadingState(true)
+                    setErrorState(true, it.exception.toString())
+                }
                 is Resource.Success -> {
+                    setLoadingState(false)
+                    setErrorState(false)
                     setHomeRecyclerView(it.payload)
-                    Log.d("homefragment", it.payload.toString())
                 }
                 else -> {}
             }
         }
-        viewModel.searchResult.observe(viewLifecycleOwner) {
-            when (it) {
-                is Resource.Loading -> {}
-                is Resource.Error -> {}
-                is Resource.Empty -> {
-                    Toast.makeText(requireContext(), "Movie not found", Toast.LENGTH_SHORT).show()
-                }
-                is Resource.Success -> {
-                    Log.d("search", it.payload.toString())
-                    setSearchRecyclerView(it.payload)
-                }
-            }
-        }
     }
 
-    private fun setSearchRecyclerView(list: Search? = null) {
-        val adapter = SearchAdapter()
-        Log.d("search", list?.results.toString())
-        adapter.setList(list?.results)
-        binding.rvSearchList.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvSearchList.adapter = adapter
+    private fun setErrorState(isError: Boolean, message: String? = "") {
+        binding.tvError.isVisible = isError
+        binding.tvError.text = message
+    }
+
+    private fun setLoadingState(isLoading: Boolean) {
+        binding.pbHomeList.isVisible = isLoading
+        binding.rvHomeList.isVisible = !isLoading
     }
 
     override fun onDestroyView() {

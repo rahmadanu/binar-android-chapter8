@@ -65,6 +65,7 @@ class DetailFragment : Fragment() {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.ivMovieImage)
             binding.tvMovieTitle.text = movie.title
+            binding.tvOverview.text = movie.overview
         }
     }
 

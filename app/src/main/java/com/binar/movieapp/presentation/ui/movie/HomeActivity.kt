@@ -10,13 +10,15 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.binar.movieapp.R
+import com.binar.movieapp.presentation.ui.movie.home.HomeFragment
+import com.binar.movieapp.presentation.ui.user.login.LoginFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
-
+    private lateinit var bottomNav: BottomNavigationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -26,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
 
         navController = navHostFragment.navController
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav_view)
+        bottomNav = findViewById(R.id.bottom_nav_view)
 
         val appBarConfiguration = AppBarConfiguration.Builder(
             R.id.homeFragment,
@@ -35,13 +37,22 @@ class HomeActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav.setupWithNavController(navController)
+        supportActionBar?.hide()
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.detailFragment) {
-                bottomNav.visibility = View.GONE
-            } else {
-                bottomNav.visibility = View.VISIBLE
+            when (destination.id) {
+                R.id.detailFragment -> hideBottomNav(true)
+                R.id.updateProfileFragment -> hideBottomNav(true)
+                else -> hideBottomNav(false)
             }
+        }
+    }
+
+    private fun hideBottomNav(hide: Boolean) {
+        if (hide) {
+            bottomNav.visibility = View.GONE
+        } else {
+            bottomNav.visibility = View.VISIBLE
         }
     }
 
