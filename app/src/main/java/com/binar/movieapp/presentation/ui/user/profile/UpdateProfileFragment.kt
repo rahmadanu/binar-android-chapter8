@@ -57,12 +57,8 @@ class UpdateProfileFragment : Fragment() {
                     val options = NavOptions.Builder()
                         .setPopUpTo(R.id.updateProfileFragment, true)
                         .build()
-
-                    val userId = viewModel.getUserId()
-                    val user = parseFormIntoData()
-                    val action = UpdateProfileFragmentDirections.actionUpdateProfileFragmentToProfileFragment(user)
+                    val action = UpdateProfileFragmentDirections.actionUpdateProfileFragmentToProfileFragment()
                     findNavController().navigate(action, options)
-                    Log.d("data", user.toString())
                     Toast.makeText(requireContext(), "Update success", Toast.LENGTH_SHORT).show()
                 }
                 else -> {}

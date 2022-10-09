@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.binar.movieapp.R
@@ -27,7 +28,6 @@ class ProfileFragment : Fragment() {
         ProfileViewModel(UserServiceLocator.provideUserRepository(requireContext()))
     }
 
-    private val args: ProfileFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,14 +46,12 @@ class ProfileFragment : Fragment() {
         setOnClickListener()
     }
 
-    private fun getUserData() {
-        val user = args.user
-        bindDataToView(user)
-    }
-
     private fun setOnClickListener() {
         binding.btnUpdateProfile.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_updateProfileFragment)
+            val options = NavOptions.Builder()
+                .setPopUpTo(R.id.profileFragment, false)
+                .build()
+            findNavController().navigate(R.id.action_profileFragment_to_updateProfileFragment, null, options)
         }
         binding.btnLogout.setOnClickListener {
             viewModel.setIfUserLogin(false)
@@ -76,14 +74,6 @@ class ProfileFragment : Fragment() {
     private fun observeData() {
         viewModel.userByIdResult.observe(viewLifecycleOwner) {
             bindDataToView(it)
-        }
-        viewModel.updateResult.observe(viewLifecycleOwner) {
-            when (it) {
-                is Resource.Success -> {
-                    getUserData()
-                }
-                else -> {}
-            }
         }
     }
 
