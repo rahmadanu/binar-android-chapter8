@@ -23,7 +23,7 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModelFactory {
         ProfileViewModel(UserServiceLocator.provideUserRepository(requireContext()))
     }
-
+    //test
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
