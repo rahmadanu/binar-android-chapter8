@@ -17,9 +17,6 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val movieRepository: MovieRepository, private val userRepository: UserRepository): ViewModel() {
 
-    private val _searchResult = MutableLiveData<Resource<Search>>()
-    val searchResult: LiveData<Resource<Search>> = _searchResult
-
     private val _homeMovieListResult = MutableLiveData<Resource<List<HomeMovie>>>()
     val homeMovieListResult: LiveData<Resource<List<HomeMovie>>> get() = _homeMovieListResult
 
@@ -56,20 +53,5 @@ class HomeViewModel(private val movieRepository: MovieRepository, private val us
         viewModelScope.launch {
             _userByIdResult.postValue(userRepository.getUserById(id))
         }
-    }
-
-    fun searchMovie(query: String) {
-        Log.d("searchMovie", "searchMovie")
-        viewModelScope.launch(Dispatchers.IO) {
-            val data = movieRepository.searchMovie(query)
-            viewModelScope.launch(Dispatchers.Main) {
-                _searchResult.postValue(data)
-            }
-        }
-    }
-    var listStateParcel: Parcelable? = null
-
-    fun saveListState(parcel: Parcelable) {
-        listStateParcel = parcel
     }
 }

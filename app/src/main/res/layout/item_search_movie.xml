@@ -8,7 +8,7 @@
     android:paddingHorizontal="20dp">
 
     <ImageView
-        android:id="@+id/iv_poster_movie"
+        android:id="@+id/iv_poster"
         android:layout_width="130dp"
         android:layout_height="180dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,14 +16,14 @@
         tools:background="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tv_title_movie"
+        android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/iv_poster_movie"
+        app:layout_constraintStart_toEndOf="@id/iv_poster"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:text="Avengers: Endgame" />

@@ -4,13 +4,14 @@ import com.binar.movieapp.data.network.datasource.MovieRemoteDataSource
 import com.binar.movieapp.data.network.model.HomeMovieItem
 import com.binar.movieapp.data.network.model.detail.DetailMovie
 import com.binar.movieapp.data.network.model.search.Search
+import com.binar.movieapp.data.network.model.search.SearchItem
 import com.binar.movieapp.wrapper.Resource
 
 interface MovieRepository {
     suspend fun getPopular(): Resource<List<HomeMovieItem>>
     suspend fun getTopRated(): Resource<List<HomeMovieItem>>
     suspend fun getUpcoming(): Resource<List<HomeMovieItem>>
-    suspend fun searchMovie(query: String): Resource<Search>
+    suspend fun searchMovie(query: String): Resource<List<SearchItem>>
     suspend fun getDetail(id: Int): Resource<DetailMovie>
 }
 
@@ -81,10 +82,10 @@ class MovieRepositoryImpl(private val dataSource: MovieRemoteDataSource): MovieR
         }
     }
 
-    override suspend fun searchMovie(query: String): Resource<Search> {
+    override suspend fun searchMovie(query: String): Resource<List<SearchItem>> {
         return try {
             val data = dataSource.searchMovie(query)
-            if (data.results.isNullOrEmpty()) Resource.Empty() else Resource.Success(data)
+            if (data.results.isNullOrEmpty()) Resource.Empty() else Resource.Success(data.results)
         } catch (exception: Exception) {
             Resource.Error(exception)
         }

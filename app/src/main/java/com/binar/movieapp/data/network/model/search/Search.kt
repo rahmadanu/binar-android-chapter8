@@ -7,5 +7,5 @@ data class Search(
     @SerializedName("page")
     val page: Int? = null,
     @SerializedName("results")
-    val results: List<SearchItem?>? = null
+    val results: List<SearchItem>? = null
 )

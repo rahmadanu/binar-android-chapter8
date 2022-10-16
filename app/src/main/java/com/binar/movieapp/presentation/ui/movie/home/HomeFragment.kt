@@ -74,10 +74,6 @@ class HomeFragment : Fragment() {
             rvHomeList.layoutManager = LinearLayoutManager(requireContext())
             rvHomeList.adapter = adapter
         }
-        viewModel.listStateParcel?.let { parcelable ->
-            binding.rvHomeList.layoutManager?.onRestoreInstanceState(parcelable)
-            viewModel.listStateParcel = null
-        }
     }
 
     private fun observeData() {
