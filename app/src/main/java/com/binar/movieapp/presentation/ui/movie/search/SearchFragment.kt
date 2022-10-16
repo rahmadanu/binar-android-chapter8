@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.movieapp.databinding.FragmentSearchBinding
 import com.binar.movieapp.di.MovieServiceLocator
@@ -24,7 +25,8 @@ class SearchFragment : Fragment() {
 
     private val adapter: SearchAdapter by lazy {
         SearchAdapter {
-
+            val action = SearchFragmentDirections.actionSearchFragmentToDetailFragment(it.id!!)
+            findNavController().navigate(action)
         }
     }
 
