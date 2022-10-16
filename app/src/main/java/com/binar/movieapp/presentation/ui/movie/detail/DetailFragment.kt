@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.binar.movieapp.R
 import com.binar.movieapp.data.network.model.detail.DetailMovie
 import com.binar.movieapp.data.network.model.detail.Genre
@@ -26,6 +27,8 @@ class DetailFragment : Fragment() {
         DetailViewModel(MovieServiceLocator.provideMovieRepository(requireContext()))
     }
 
+    private val args: DetailFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,7 +41,12 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        getData()
         observeData()
+    }
+
+    private fun getData() {
+        viewModel.getDetail(args.id)
     }
 
     private fun observeData() {
@@ -63,13 +71,13 @@ class DetailFragment : Fragment() {
     }
 
     private fun setErrorState(isError: Boolean, message: String? = "") {
-        binding.tvError?.isVisible = isError
-        binding.tvError?.text = message
+        binding.tvError.isVisible = isError
+        binding.tvError.text = message
     }
 
     private fun setLoadingState(isLoading: Boolean) {
-        binding.pbHomeList?.isVisible = isLoading
-        binding.constraintLayout?.isVisible = !isLoading
+        binding.pbHomeList.isVisible = isLoading
+        binding.constraintLayout.isVisible = !isLoading
     }
 
     private fun setView(movie: DetailMovie?) {
@@ -82,9 +90,8 @@ class DetailFragment : Fragment() {
                 tvMovieTitle.text = movie.title
                 tvOverview.text = movie.overview
                 tvTagline.text = movie.tagline
-                tvRating?.text = movie.voteAverage?.toFloat().toString()
-                tvOfficialWeb?.text = movie.homepage
-
+                tvRating.text = movie.voteAverage?.toFloat().toString()
+                tvOfficialWeb.text = movie.homepage
 
                 val genre = setGenre(movie.genres)
                 val language = setLanguage(movie.originalLanguage, movie.spokenLanguages)

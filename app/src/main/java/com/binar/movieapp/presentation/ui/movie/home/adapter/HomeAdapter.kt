@@ -50,7 +50,6 @@ class HomeAdapter: RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
                 val posterAdapter = HomePosterAdapter()
                 posterAdapter.submitList(item.results)
                 posterAdapter.itemClickListener = itemClickListener
-
                 rvPoster.adapter = posterAdapter
                 rvPoster.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
             }
