@@ -30,7 +30,7 @@ class HomeViewModel(private val movieRepository: MovieRepository, private val us
         getHomeMovieList()
     }
 
-    fun getHomeMovieList() {
+    private fun getHomeMovieList() {
         viewModelScope.launch(Dispatchers.IO) {
             _homeMovieListResult.postValue(Resource.Loading())
             //delay(1000)
