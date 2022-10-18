@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
-import com.binar.movieapp.data.local.model.user.UserEntity
+import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.databinding.FragmentProfileBinding
 import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.presentation.ui.user.MainActivity
@@ -37,7 +37,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getInitialData()
         observeData()
         setOnClickListener()
     }
@@ -50,30 +49,19 @@ class ProfileFragment : Fragment() {
             findNavController().navigate(R.id.action_profileFragment_to_updateProfileFragment, null, options)
         }
         binding.btnLogout.setOnClickListener {
-            viewModel.setIfUserLogin(false)
+            viewModel.setUserLogin(false)
             startActivity(Intent(requireContext(), MainActivity::class.java))
             activity?.finish()
         }
     }
 
-    private fun getInitialData() {
-        val userId = viewModel.getUserId()
-        getUserById(userId)
-    }
-
-    private fun getUserById(userId: Long?) {
-        if (userId != null) {
-            viewModel.getUserById(userId)
-        }
-    }
-
     private fun observeData() {
-        viewModel.userByIdResult.observe(viewLifecycleOwner) {
+        viewModel.getUser().observe(viewLifecycleOwner) {
             bindDataToView(it)
         }
     }
 
-    private fun bindDataToView(user: UserEntity?) {
+    private fun bindDataToView(user: UserPreferences?) {
         user?.let {
             binding.apply {
                 tvUsername.text = user.username

@@ -1,26 +1,22 @@
 package com.binar.movieapp.presentation.ui.user.register
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.binar.movieapp.data.local.model.user.UserEntity
+import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.data.repository.UserRepository
-import com.binar.movieapp.util.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class RegisterViewModel(private val repository: UserRepository) : ViewModel() {
 
-    private var _getIfUserExistResult = SingleLiveEvent<Boolean>()
-    val getIfUserExistResult: SingleLiveEvent<Boolean> get() = _getIfUserExistResult
-
-    fun registerUser(user: UserEntity) {
+    fun registerUser(id: Int, username: String, email: String, password: String) {
         viewModelScope.launch {
-            repository.registerUser(user)
+            repository.setUser(id, username, email, password)
         }
     }
 
-    fun getIfUserExist(username: String){
-        viewModelScope.launch {
-            _getIfUserExistResult.value = repository.getIfUserExists(username)
-        }
+    fun getUser(): LiveData<UserPreferences> {
+        return repository.getUser().asLiveData()
     }
 }

@@ -9,13 +9,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.binar.movieapp.R
-import com.binar.movieapp.data.network.model.HomeMovie
 import com.binar.movieapp.databinding.FragmentHomeBinding
 import com.binar.movieapp.di.MovieServiceLocator
 import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.presentation.ui.movie.home.adapter.HomeAdapter
-import com.binar.movieapp.presentation.ui.user.profile.ProfileFragment
 import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.wrapper.Resource
 
@@ -31,6 +28,8 @@ class HomeFragment : Fragment() {
         )
     }
 
+    private lateinit var adapter: HomeAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,27 +43,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         getInitialUser()
+        initList()
         observeData()
     }
 
-    private fun getInitialUser() {
-        val userId = viewModel.getUserId()
-        Log.d("inituser", userId.toString())
-        viewModel.getUserById(userId)
-        viewModel.userByIdResult.observe(viewLifecycleOwner) {
-            it?.let { binding.tvUsername.text = it.username
-                Log.d("inituser", it.username.toString())}
-        }
-        findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
-            if (destination.id == R.id.profileFragment) {
-                ProfileFragment().arguments = arguments
-            }
-        }
-    }
-
-    private fun setHomeRecyclerView(movie: List<HomeMovie>?) {
-        val adapter = HomeAdapter()
-        adapter.submitList(movie)
+    private fun initList() {
+        adapter = HomeAdapter()
         adapter.itemClickListener = {
             val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it.id!!)
             findNavController().navigate(action)
@@ -73,6 +57,13 @@ class HomeFragment : Fragment() {
         binding.apply {
             rvHomeList.layoutManager = LinearLayoutManager(requireContext())
             rvHomeList.adapter = adapter
+        }
+    }
+
+    private fun getInitialUser() {
+        viewModel.getUser().observe(viewLifecycleOwner) {
+            it?.let { binding.tvUsername.text = it.username
+                Log.d("inituser", it.username.toString())}
         }
     }
 
@@ -90,7 +81,7 @@ class HomeFragment : Fragment() {
                 is Resource.Success -> {
                     setLoadingState(false)
                     setErrorState(false)
-                    setHomeRecyclerView(it.payload)
+                    adapter.submitList(it.payload)
                 }
                 else -> {}
             }

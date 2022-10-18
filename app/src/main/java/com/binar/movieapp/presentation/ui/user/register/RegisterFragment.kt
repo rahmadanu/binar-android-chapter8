@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
-import com.binar.movieapp.data.local.model.user.UserEntity
 import com.binar.movieapp.databinding.FragmentRegisterBinding
 import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.util.viewModelFactory
@@ -43,21 +42,14 @@ class RegisterFragment : Fragment() {
 
     private fun registerUser() {
         if (validateInput()) {
-            val user = UserEntity(
-                username = binding.etUsername.text.toString(),
-                email = binding.etEmail.text.toString(),
-                password = binding.etPassword.text.toString()
-            )
-            user.username?.let { viewModel.getIfUserExist(it) }
-            viewModel.getIfUserExistResult.observe(viewLifecycleOwner) { exist ->
-                Log.d("userexist", exist.toString())
-                if (!exist) {
-                    viewModel.registerUser(user)
-                    navigateToLogin()
-                } else {
-                    Toast.makeText(requireContext(), "Username already registered", Toast.LENGTH_SHORT).show()
-                }
-            }
+            val id = (1..10000).random()
+            val username = binding.etUsername.text.toString().trim()
+            val email = binding.etEmail.text.toString().trim()
+            val password = binding.etPassword.text.toString().trim()
+
+            viewModel.registerUser(id, username, email, password)
+            Log.d("register", "$id and $username and pass $password")
+            navigateToLogin()
         }
     }
 

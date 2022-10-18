@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.binar.movieapp.data.network.datasource.MovieRemoteDataSource
-import com.binar.movieapp.data.network.model.search.Search
 import com.binar.movieapp.data.network.model.search.SearchItem
 import com.binar.movieapp.data.repository.MovieRepository
 import com.binar.movieapp.wrapper.Resource

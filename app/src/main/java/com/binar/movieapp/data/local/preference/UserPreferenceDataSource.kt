@@ -1,32 +1,51 @@
 package com.binar.movieapp.data.local.preference
 
+import kotlinx.coroutines.flow.Flow
+
 interface UserPreferenceDataSource {
-    fun getIfUserLogin(): Boolean
+    suspend fun setUser(id: Int, name: String, email: String, password: String)
 
-    fun setIfUserLogin(userLoggedIn: Boolean)
+    suspend fun updateUser(user: UserPreferences)
 
-    fun setUserId(id: Long)
+    suspend fun setUserLogin(isLogin: Boolean)
 
-    fun getUserId(): Long
+    suspend fun setProfileImage(image: String)
+
+    fun getUser(): Flow<UserPreferences>
+
+    fun getUserLogin(): Flow<Boolean>
+
+    fun getUserProfileImage(): Flow<String>
 }
 
 class UserPreferenceDataSourceImpl(
-    private val userPreference: UserPreference
+    private val userDataStore: UserDataStoreManager
 ): UserPreferenceDataSource {
-    override fun getIfUserLogin(): Boolean {
-        return userPreference.loginKeyValue
+    override suspend fun setUser(id: Int, name: String, email: String, password: String) {
+        userDataStore.setUser(id, name, email, password)
     }
 
-    override fun setIfUserLogin(userLoggedIn: Boolean) {
-        userPreference.loginKeyValue = userLoggedIn
+    override suspend fun updateUser(user: UserPreferences) {
+        userDataStore.updateUser(user)
     }
 
-    override fun setUserId(id: Long) {
-        userPreference.userIdKeyValue = id
+    override suspend fun setUserLogin(isLogin: Boolean) {
+        userDataStore.setUserLogin(isLogin)
     }
 
-    override fun getUserId(): Long {
-        return userPreference.userIdKeyValue
+    override suspend fun setProfileImage(image: String) {
+        userDataStore.setProfileImage(image)
     }
 
+    override fun getUser(): Flow<UserPreferences> {
+        return userDataStore.getUser()
+    }
+
+    override fun getUserLogin(): Flow<Boolean> {
+        return userDataStore.getUserLogin()
+    }
+
+    override fun getUserProfileImage(): Flow<String> {
+        return userDataStore.getUserProfileImage()
+    }
 }

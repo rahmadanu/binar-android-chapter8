@@ -10,11 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
-import com.binar.movieapp.data.local.model.user.UserEntity
+import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.databinding.FragmentUpdateProfileBinding
 import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.util.viewModelFactory
-import com.binar.movieapp.wrapper.Resource
 
 class UpdateProfileFragment : Fragment() {
 
@@ -37,18 +36,21 @@ class UpdateProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getInitialData()
+        //getInitialData()
         setOnClickListener()
         observeData()
     }
 
-    private fun getInitialData() {
+    /*private fun getInitialData() {
         val userId = viewModel.getUserId()
         viewModel.getUserById(userId)
-    }
+    }*/
 
     private fun observeData() {
-        viewModel.userByIdResult.observe(viewLifecycleOwner) {
+        viewModel.getUser().observe(viewLifecycleOwner) {
+            bindDataToForm(it)
+        }
+        /*viewModel.userByIdResult.observe(viewLifecycleOwner) {
             bindDataToForm(it)
         }
         viewModel.updateResult.observe(viewLifecycleOwner) {
@@ -63,30 +65,38 @@ class UpdateProfileFragment : Fragment() {
                 }
                 else -> {}
             }
-        }
+        }*/
     }
 
     private fun setOnClickListener() {
         binding.btnUpdate.setOnClickListener {
             if (validateInput()) {
                 viewModel.updateUser(parseFormIntoData())
+                val options = NavOptions.Builder()
+                    .setPopUpTo(R.id.updateProfileFragment, true)
+                    .build()
+                val action = UpdateProfileFragmentDirections.actionUpdateProfileFragmentToProfileFragment()
+                findNavController().navigate(action, options)
+                Toast.makeText(requireContext(), "Update success", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun parseFormIntoData(): UserEntity {
-        return UserEntity(
+    private fun parseFormIntoData(): UserPreferences {
+        return UserPreferences(
             username = binding.etUsername.text.toString().trim(),
             email = binding.etUsername.text.toString().trim(),
             fullName = binding.etFullName.text.toString().trim(),
             dateOfBirth = binding.etDateOfBirth.text.toString().trim(),
             address = binding.etAddress.text.toString().trim()
         ).apply {
-            userId = viewModel.getUserId()
+            viewModel.getUser().observe(viewLifecycleOwner) {
+                this.id = it.id
+            }
         }
     }
 
-    private fun bindDataToForm(user: UserEntity?) {
+    private fun bindDataToForm(user: UserPreferences?) {
         Log.d("profile", user.toString())
         user?.let {
             binding.apply {

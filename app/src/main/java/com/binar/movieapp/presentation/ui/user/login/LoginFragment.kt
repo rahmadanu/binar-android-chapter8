@@ -2,6 +2,7 @@ package com.binar.movieapp.presentation.ui.user.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,11 +36,10 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        isUserLoggedIn()
+
         binding.btnLogin.setOnClickListener { checkLogin() }
 
-        if (isUserLoggedIn()) {
-            navigateToHome()
-        }
 
         binding.tvRegisterHere.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
@@ -51,43 +51,15 @@ class LoginFragment : Fragment() {
             val username = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
 
-            viewModel.getIfUserExist(username)
-            viewModel.getIfUserExistResult.observe(viewLifecycleOwner) { exist ->
-                if (exist) {
-                    viewModel.checkIsUserLoginValid(username, password)
-                    viewModel.checkIsUserLoginValid.observe(viewLifecycleOwner) {
-                        setSharedPreference(username)
-                        checkUser(it)
-                    }
-                } else {
-                    setLoginState("Username not found")
-                }
-            }
-        }
-    }
-
-    private fun setSharedPreference(username: String) {
-        viewModel.getUserByUsername(username)
-        viewModel.userByUsernameResult.observe(viewLifecycleOwner) {
-            viewModel.setUserId(it.userId)
-        }
-    }
-
-/*    private fun checkIfUsernameExists(username: String, password: String): Boolean {
-        return viewModel.getIfUserExist(username, password)
-    }*/
-
-    private fun checkUser(userLoggedIn: Boolean?) {
-
-        if (validateInput()) {
-            userLoggedIn?.let {
-                if (userLoggedIn) {
+            viewModel.getUser().observe(viewLifecycleOwner) { user ->
+                Log.d("get", user.username + " and " + user.password)
+                if (user.username == username && user.password == password) {
                     navigateToHome()
                     setLoginState("Login Success")
+                    viewModel.setUserLogin(true)
                 } else {
-                    setLoginState("Wrong password")
+                    setLoginState("Wrong username or password")
                 }
-                viewModel.setIfUserLogin(userLoggedIn)
             }
         }
     }
@@ -96,8 +68,12 @@ class LoginFragment : Fragment() {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun isUserLoggedIn(): Boolean {
-        return viewModel.checkIfUserLoggedIn()
+    private fun isUserLoggedIn() {
+        viewModel.getUserLogin().observe(viewLifecycleOwner) {
+            if (it) {
+                navigateToHome()
+            }
+        }
     }
 
     private fun validateInput(): Boolean {
@@ -117,7 +93,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateToHome() {
-        val intent = Intent(requireContext(), HomeActivity::class.java)
+        val intent = Intent(requireContext(), HomeActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        }
         startActivity(intent)
         activity?.finish()
     }
