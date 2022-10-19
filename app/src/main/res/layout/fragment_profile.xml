@@ -8,7 +8,6 @@
     android:paddingHorizontal="20dp"
     tools:context=".presentation.ui.user.profile.ProfileFragment">
 
-
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_profile"
             android:layout_width="match_parent"
@@ -19,6 +18,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <ImageView
+            android:id="@+id/iv_profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:padding="1dp"
+            android:scaleType="fitXY"
+            android:background="@drawable/profile_image_background"
+            android:src="@drawable/profile_image_placeholder"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/content_profile_image" />
+
         <TextView
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
@@ -26,7 +38,7 @@
             android:textSize="16sp"
             android:layout_marginTop="30dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_profile"
+            app:layout_constraintTop_toBottomOf="@id/iv_profile_image"
             tools:text="@string/username"/>
 
         <TextView

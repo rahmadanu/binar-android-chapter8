@@ -1,7 +1,10 @@
 package com.binar.movieapp.presentation.ui.user.profile
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +17,7 @@ import com.binar.movieapp.databinding.FragmentProfileBinding
 import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.presentation.ui.user.MainActivity
 import com.binar.movieapp.util.viewModelFactory
+import com.bumptech.glide.Glide
 
 class ProfileFragment : Fragment() {
 
@@ -69,8 +73,21 @@ class ProfileFragment : Fragment() {
                 tvFullName.text = user.fullName
                 tvDateOfBirth.text = user.dateOfBirth
                 tvAddress.text = user.address
+
+                user.profileImage?.let {
+                    if (it.isEmpty().not()) {
+                        Glide.with(this@ProfileFragment)
+                            .load(convertStringToBitmap(it))
+                            .into(binding.ivProfileImage)
+                    }
+                }
             }
         }
+    }
+
+    private fun convertStringToBitmap(string: String): Bitmap {
+        val imageBytes = Base64.decode(string, 0)
+        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
 
     override fun onDestroyView() {

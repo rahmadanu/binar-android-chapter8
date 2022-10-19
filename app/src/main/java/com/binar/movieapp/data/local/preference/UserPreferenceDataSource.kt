@@ -14,8 +14,6 @@ interface UserPreferenceDataSource {
     fun getUser(): Flow<UserPreferences>
 
     fun getUserLogin(): Flow<Boolean>
-
-    fun getUserProfileImage(): Flow<String>
 }
 
 class UserPreferenceDataSourceImpl(
@@ -43,9 +41,5 @@ class UserPreferenceDataSourceImpl(
 
     override fun getUserLogin(): Flow<Boolean> {
         return userDataStore.getUserLogin()
-    }
-
-    override fun getUserProfileImage(): Flow<String> {
-        return userDataStore.getUserProfileImage()
     }
 }

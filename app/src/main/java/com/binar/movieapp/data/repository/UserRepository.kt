@@ -13,7 +13,6 @@ interface UserRepository {
 
     fun getUser(): Flow<UserPreferences>
     fun getUserLogin(): Flow<Boolean>
-    fun getUserProfileImage(): Flow<String>
 }
 
 class UserRepositoryImpl(
@@ -41,10 +40,6 @@ class UserRepositoryImpl(
 
     override fun getUserLogin(): Flow<Boolean> {
         return userPreferenceDataSource.getUserLogin()
-    }
-
-    override fun getUserProfileImage(): Flow<String> {
-        return userPreferenceDataSource.getUserProfileImage()
     }
 
     private suspend fun <T> proceed(coroutine: suspend () -> T): Resource<T> {

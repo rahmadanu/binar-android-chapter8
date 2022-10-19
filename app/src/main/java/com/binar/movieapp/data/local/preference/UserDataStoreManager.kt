@@ -63,12 +63,6 @@ class UserDataStoreManager(private val context: Context) {
         }
     }
 
-    fun getUserProfileImage(): Flow<String> {
-        return context.userDataStore.data.map { preferences ->
-            preferences[PROFILE_IMAGE_KEY] ?: ""
-        }
-    }
-
     companion object {
         private const val DATA_STORE_NAME = "user_preferences"
         private val ID_KEY = intPreferencesKey("id_key")

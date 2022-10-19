@@ -6,6 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.data.repository.UserRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val repository: UserRepository): ViewModel() {
@@ -23,6 +24,12 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
     fun updateUser(user: UserPreferences) {
         viewModelScope.launch {
             repository.updateUser(user)
+        }
+    }
+
+    fun setProfileImage(image: String) {
+        viewModelScope.launch {
+            repository.setProfileImage(image)
         }
     }
 }
