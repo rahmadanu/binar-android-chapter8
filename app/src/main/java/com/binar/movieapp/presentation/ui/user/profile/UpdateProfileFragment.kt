@@ -36,7 +36,7 @@ class UpdateProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: ProfileViewModel by viewModelFactory {
-        ProfileViewModel(UserServiceLocator.provideUserRepository(requireContext()))
+        ProfileViewModel(UserServiceLocator.provideUserRepository(requireContext()), requireActivity().application)
     }
 
     private val REQUEST_CODE_PERMISSION = 3

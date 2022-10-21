@@ -31,6 +31,49 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:contentDescription="@string/content_profile_image" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_image"
+            app:layout_constraintTop_toTopOf="@id/iv_profile_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/iv_profile_image">
+
+                <Button
+                    android:id="@+id/btn_blur_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blur Image"
+                    android:textColor="?attr/colorPrimary"
+                    android:background="@android:color/transparent"/>
+
+                <ProgressBar
+                    android:id="@+id/pb_loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btn_cancel_blur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"
+                    android:visibility="gone"
+                    android:textColor="?attr/colorPrimary"
+                    android:background="@android:color/transparent"/>
+
+                <Button
+                    android:id="@+id/btn_see_blur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="See Blur"
+                    android:textColor="?attr/colorPrimary"
+                    android:background="@android:color/transparent"/>
+
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tv_username"
             android:layout_width="wrap_content"
