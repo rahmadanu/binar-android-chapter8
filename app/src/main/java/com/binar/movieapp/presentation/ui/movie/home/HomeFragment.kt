@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.movieapp.databinding.FragmentHomeBinding
@@ -15,18 +16,15 @@ import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.presentation.ui.movie.home.adapter.HomeAdapter
 import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.wrapper.Resource
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: HomeViewModel by viewModelFactory {
-        HomeViewModel(
-            MovieServiceLocator.provideMovieRepository(requireContext()),
-            UserServiceLocator.provideUserRepository(requireContext())
-        )
-    }
+    private val viewModel: HomeViewModel by viewModels()
 
     private lateinit var adapter: HomeAdapter
 

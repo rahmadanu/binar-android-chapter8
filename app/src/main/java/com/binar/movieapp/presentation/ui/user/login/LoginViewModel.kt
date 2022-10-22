@@ -6,9 +6,12 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.data.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(private val repository: UserRepository) : ViewModel(){
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val repository: UserRepository) : ViewModel(){
 
     fun getUser(): LiveData<UserPreferences> {
         return repository.getUser().asLiveData()

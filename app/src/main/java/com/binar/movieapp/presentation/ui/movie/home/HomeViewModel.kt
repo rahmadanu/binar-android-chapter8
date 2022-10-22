@@ -6,10 +6,13 @@ import com.binar.movieapp.data.network.model.HomeMovie
 import com.binar.movieapp.data.repository.MovieRepository
 import com.binar.movieapp.data.repository.UserRepository
 import com.binar.movieapp.wrapper.Resource
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomeViewModel(private val movieRepository: MovieRepository, private val userRepository: UserRepository): ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val movieRepository: MovieRepository, private val userRepository: UserRepository): ViewModel() {
 
     private val _homeMovieListResult = MutableLiveData<Resource<List<HomeMovie>>>()
     val homeMovieListResult: LiveData<Resource<List<HomeMovie>>> get() = _homeMovieListResult
