@@ -6,6 +6,7 @@ import com.binar.movieapp.data.network.model.search.Search
 import com.binar.movieapp.data.network.model.toprated.TopRated
 import com.binar.movieapp.data.network.model.upcoming.Upcoming
 import com.binar.movieapp.data.network.service.MovieApiService
+import javax.inject.Inject
 
 interface MovieRemoteDataSource {
     suspend fun getPopular(): Popular
@@ -15,7 +16,7 @@ interface MovieRemoteDataSource {
     suspend fun getDetail(id: Int): DetailMovie
 }
 
-class MovieRemoteDataSourceImpl(private val apiService: MovieApiService): MovieRemoteDataSource {
+class MovieRemoteDataSourceImpl @Inject constructor(private val apiService: MovieApiService): MovieRemoteDataSource {
     override suspend fun getPopular(): Popular {
         return apiService.getPopular()
     }

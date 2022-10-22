@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-android'
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -52,7 +53,15 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes true
+}
+
 dependencies {
+    //dagger hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+
     //work manager
     def work_version = "2.7.1"
     implementation "androidx.work:work-runtime-ktx:$work_version"

@@ -6,26 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.binar.movieapp.R
 import com.binar.movieapp.data.network.model.detail.DetailMovie
 import com.binar.movieapp.data.network.model.detail.Genre
 import com.binar.movieapp.data.network.model.detail.SpokenLanguage
 import com.binar.movieapp.databinding.FragmentDetailBinding
-import com.binar.movieapp.di.MovieServiceLocator
-import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.wrapper.Resource
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: DetailViewModel by viewModelFactory {
-        DetailViewModel(MovieServiceLocator.provideMovieRepository(requireContext()))
-    }
+    private val viewModel: DetailViewModel by viewModels()
 
     private val args: DetailFragmentArgs by navArgs()
 

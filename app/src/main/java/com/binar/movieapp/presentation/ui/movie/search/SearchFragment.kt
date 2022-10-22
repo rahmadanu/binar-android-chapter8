@@ -7,21 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.movieapp.databinding.FragmentSearchBinding
-import com.binar.movieapp.di.MovieServiceLocator
 import com.binar.movieapp.presentation.ui.movie.search.adapter.SearchAdapter
 import com.binar.movieapp.wrapper.Resource
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: SearchViewModel by lazy {
-        SearchViewModel(MovieServiceLocator.provideMovieRepository(requireContext()))
-    }
+    private val viewModel: SearchViewModel by viewModels()
 
     private val adapter: SearchAdapter by lazy {
         SearchAdapter {

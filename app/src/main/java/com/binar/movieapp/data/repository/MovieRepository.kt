@@ -5,6 +5,9 @@ import com.binar.movieapp.data.network.model.HomeMovieItem
 import com.binar.movieapp.data.network.model.detail.DetailMovie
 import com.binar.movieapp.data.network.model.search.SearchItem
 import com.binar.movieapp.wrapper.Resource
+import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface MovieRepository {
     suspend fun getPopular(): Resource<List<HomeMovieItem>>
@@ -14,7 +17,7 @@ interface MovieRepository {
     suspend fun getDetail(id: Int): Resource<DetailMovie>
 }
 
-class MovieRepositoryImpl(private val dataSource: MovieRemoteDataSource): MovieRepository {
+class MovieRepositoryImpl @Inject constructor(private val dataSource: MovieRemoteDataSource): MovieRepository {
     override suspend fun getPopular(): Resource<List<HomeMovieItem>> {
         return proceed {
             dataSource.getPopular().results?.map {
