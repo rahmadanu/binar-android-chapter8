@@ -20,24 +20,28 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.work.WorkInfo
 import com.binar.movieapp.R
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.databinding.FragmentUpdateProfileBinding
 import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.util.viewModelFactory
+import com.binar.movieapp.workers.KEY_IMAGE_URI
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.ByteArrayOutputStream
 
+@AndroidEntryPoint
 class UpdateProfileFragment : Fragment() {
 
     private var _binding: FragmentUpdateProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ProfileViewModel by viewModelFactory {
-        ProfileViewModel(UserServiceLocator.provideUserRepository(requireContext()), requireActivity().application)
-    }
+    private val viewModel: ProfileViewModel by viewModels()
 
     private val REQUEST_CODE_PERMISSION = 3
 
@@ -77,6 +81,7 @@ class UpdateProfileFragment : Fragment() {
         binding.btnUpdate.setOnClickListener {
             if (validateInput()) {
                 viewModel.updateUser(parseFormIntoData())
+
                 val options = NavOptions.Builder()
                     .setPopUpTo(R.id.updateProfileFragment, true)
                     .build()
@@ -86,6 +91,8 @@ class UpdateProfileFragment : Fragment() {
             }
         }
     }
+
+
 
     private fun parseFormIntoData(): UserPreferences {
         return UserPreferences(

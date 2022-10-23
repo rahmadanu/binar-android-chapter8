@@ -1,9 +1,10 @@
 package com.binar.movieapp.presentation.ui.user.profile
 
 import android.app.Application
-import android.content.ContentResolver
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.MediaStore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -12,9 +13,16 @@ import androidx.work.*
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.data.repository.UserRepository
 import com.binar.movieapp.workers.*
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.util.Calendar
+import javax.inject.Inject
 
-class ProfileViewModel(private val repository: UserRepository, application: Application): ViewModel() {
+@HiltViewModel
+class ProfileViewModel @Inject constructor(private val repository: UserRepository, @ApplicationContext application: Context): ViewModel() {
 
     fun getUser(): LiveData<UserPreferences> {
         return repository.getUser().asLiveData()
@@ -42,12 +50,6 @@ class ProfileViewModel(private val repository: UserRepository, application: Appl
     internal var outputUri: Uri? = null
     private val workManager = WorkManager.getInstance(application)
     internal val outputWorkInfos: LiveData<List<WorkInfo>> = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
-
-    init {
-        // This transformation makes sure that whenever the current work Id changes the WorkInfo
-        // the UI is listening to changes
-        imageUri = getImageUri(application.applicationContext)
-    }
 
     internal fun cancelWork() {
         workManager.cancelUniqueWork(IMAGE_MANIPULATION_WORK_NAME)
@@ -116,15 +118,16 @@ class ProfileViewModel(private val repository: UserRepository, application: Appl
         }
     }
 
-    private fun getImageUri(context: Context): Uri {
-        val resources = context.resources
-
-        return Uri.Builder()
-            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-            .authority(resources.getResourcePackageName(com.binar.movieapp.R.drawable.profile_image_placeholder))
-            .appendPath(resources.getResourceTypeName(com.binar.movieapp.R.drawable.profile_image_placeholder))
-            .appendPath(resources.getResourceEntryName(com.binar.movieapp.R.drawable.profile_image_placeholder))
-            .build()
+    fun getImageUri(context: Context, image: Bitmap) {
+        val bytes = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(
+            context.getContentResolver(),
+            image,
+            "BlurredImage_" + Calendar.getInstance().time,
+            null
+        )
+        imageUri = Uri.parse(path)
     }
 
     internal fun setOutputUri(outputImageUri: String?) {

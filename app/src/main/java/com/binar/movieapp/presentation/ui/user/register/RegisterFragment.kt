@@ -11,9 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
+import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.databinding.FragmentRegisterBinding
-import com.binar.movieapp.di.UserServiceLocator
-import com.binar.movieapp.util.viewModelFactory
+import com.binar.movieapp.presentation.ui.user.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +22,7 @@ class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: RegisterViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,8 +47,13 @@ class RegisterFragment : Fragment() {
             val username = binding.etUsername.text.toString().trim()
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
-
-            viewModel.registerUser(id, username, email, password)
+            val user = UserPreferences(
+                id = id,
+                username = username,
+                email = email,
+                password = password
+            )
+            viewModel.registerUser(user)
             Log.d("register", "$id and $username and pass $password")
             navigateToLogin()
         }

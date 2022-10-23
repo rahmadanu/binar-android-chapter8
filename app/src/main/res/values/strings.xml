@@ -26,4 +26,9 @@
     <string name="title_official_website">Official website:</string>
     <string name="hint_search">Search</string>
     <string name="content_profile_image">User profile image</string>
+    <string name="profile_username">Username: \n%1$s</string>
+    <string name="profile_email">Email: \n%1$s</string>
+    <string name="profile_full_name">Full name: \n%1$s</string>
+    <string name="profile_date_of_birth">Date of birth: \n%1$s</string>
+    <string name="profile_address">Address: \n%1$s</string>
 </resources>

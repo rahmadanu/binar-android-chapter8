@@ -26,4 +26,10 @@ class LoginViewModel @Inject constructor(private val repository: UserRepository)
     fun getUserLogin(): LiveData<Boolean> {
         return repository.getUserLogin().asLiveData()
     }
+
+    fun registerUser(user: UserPreferences) {
+        viewModelScope.launch {
+            repository.setUser(user)
+        }
+    }
 }

@@ -3,13 +3,16 @@ package com.binar.movieapp.presentation.ui.user.profile
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -22,16 +25,15 @@ import com.binar.movieapp.presentation.ui.user.MainActivity
 import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.workers.KEY_IMAGE_URI
 import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ProfileViewModel by viewModelFactory {
-        ProfileViewModel(UserServiceLocator.provideUserRepository(requireContext()), requireActivity().application)
-    }
-    //test
+    private val viewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +49,7 @@ class ProfileFragment : Fragment() {
 
         observeData()
         setOnClickListener()
+        viewModel.outputWorkInfos.observe(viewLifecycleOwner, workInfosObserver())
     }
 
     private fun setOnClickListener() {
@@ -61,22 +64,25 @@ class ProfileFragment : Fragment() {
             startActivity(Intent(requireContext(), MainActivity::class.java))
             activity?.finish()
         }
-        binding.btnBlurImage.setOnClickListener {
+        binding.btnBlurVersion.setOnClickListener {
             viewModel.applyBlur(3)
         }
         binding.btnSeeBlur.setOnClickListener {
             viewModel.outputUri?.let { currentUri ->
                 val actionView = Intent(Intent.ACTION_VIEW, currentUri)
-                actionView.resolveActivity(requireActivity().packageManager)?.run {
-                    startActivity(actionView)
-                }
+                startActivity(actionView)
+            } ?: kotlin.run {
+                Toast.makeText(requireContext(), "Add your profile image first", Toast.LENGTH_LONG).show()
             }
         }
-        binding.btnCancelBlur.setOnClickListener {
+        binding.ivProfileImage.setOnClickListener {
+            Toast.makeText(requireContext(), "Click update profile to update your profile image", Toast.LENGTH_LONG).show()
+        }
+        binding.btnCancel.setOnClickListener {
             viewModel.cancelWork()
         }
-        viewModel.outputWorkInfos.observe(viewLifecycleOwner, workInfosObserver())
     }
+
 
     private fun workInfosObserver(): Observer<List<WorkInfo>> {
         return Observer { listOfWorkInfo ->
@@ -96,7 +102,6 @@ class ProfileFragment : Fragment() {
 
             if (workInfo.state.isFinished) {
                 showWorkFinished()
-
                 // Normally this processing, which is not directly related to drawing views on
                 // screen would be in the ViewModel. For simplicity we are keeping it here.
                 val outputImageUri = workInfo.outputData.getString(KEY_IMAGE_URI)
@@ -118,8 +123,8 @@ class ProfileFragment : Fragment() {
     private fun showWorkInProgress() {
         with(binding) {
             pbLoading.visibility = View.VISIBLE
-            btnCancelBlur.visibility = View.VISIBLE
-            btnBlurImage.visibility = View.GONE
+            btnCancel.visibility = View.VISIBLE
+            btnBlurVersion.visibility = View.GONE
             btnSeeBlur.visibility = View.GONE
         }
     }
@@ -130,9 +135,8 @@ class ProfileFragment : Fragment() {
     private fun showWorkFinished() {
         with(binding) {
             pbLoading.visibility = View.GONE
-            btnCancelBlur.visibility = View.GONE
-            btnBlurImage.visibility = View.VISIBLE
-            btnSeeBlur.visibility = View.VISIBLE
+            btnCancel.visibility = View.GONE
+            btnBlurVersion.visibility = View.VISIBLE
         }
     }
 
@@ -145,17 +149,18 @@ class ProfileFragment : Fragment() {
     private fun bindDataToView(user: UserPreferences?) {
         user?.let {
             binding.apply {
-                tvUsername.text = user.username
-                tvEmail.text = user.email
-                tvFullName.text = user.fullName
-                tvDateOfBirth.text = user.dateOfBirth
-                tvAddress.text = user.address
+                tvUsername.text = getString(R.string.profile_username, user.username)
+                tvEmail.text = getString(R.string.profile_email, user.email)
+                tvFullName.text = getString(R.string.profile_full_name, user.fullName)
+                tvDateOfBirth.text = getString(R.string.profile_date_of_birth, user.dateOfBirth)
+                tvAddress.text = getString(R.string.profile_address, user.address)
 
                 user.profileImage?.let {
                     if (it.isEmpty().not()) {
                         Glide.with(this@ProfileFragment)
                             .load(convertStringToBitmap(it))
                             .into(binding.ivProfileImage)
+                        viewModel.getImageUri(requireActivity(), convertStringToBitmap(it))
                     }
                 }
             }

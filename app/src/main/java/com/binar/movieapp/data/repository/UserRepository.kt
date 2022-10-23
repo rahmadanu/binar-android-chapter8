@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface UserRepository {
-    suspend fun setUser(id: Int, name: String, email: String, password: String)
+    suspend fun setUser(user: UserPreferences)
     suspend fun updateUser(user: UserPreferences)
     suspend fun setUserLogin(isLogin: Boolean)
     suspend fun setProfileImage(image: String)
@@ -19,8 +19,8 @@ interface UserRepository {
 class UserRepositoryImpl @Inject constructor(
     private val userPreferenceDataSource: UserPreferenceDataSource,
 ): UserRepository {
-    override suspend fun setUser(id: Int, name: String, email: String, password: String) {
-        userPreferenceDataSource.setUser(id, name, email, password)
+    override suspend fun setUser(user: UserPreferences) {
+        userPreferenceDataSource.setUser(user)
     }
 
     override suspend fun updateUser(user: UserPreferences) {

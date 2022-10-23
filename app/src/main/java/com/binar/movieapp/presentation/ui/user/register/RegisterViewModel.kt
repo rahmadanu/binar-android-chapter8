@@ -13,9 +13,9 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(private val repository: UserRepository) : ViewModel() {
 
-    fun registerUser(id: Int, username: String, email: String, password: String) {
+    fun registerUser(user: UserPreferences) {
         viewModelScope.launch {
-            repository.setUser(id, username, email, password)
+            repository.setUser(user)
         }
     }
 
