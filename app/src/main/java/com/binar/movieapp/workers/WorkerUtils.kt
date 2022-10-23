@@ -38,7 +38,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.UUID
+import java.util.*
 
 /**
  * Create a Notification that is shown as a heads-up notification if possible.

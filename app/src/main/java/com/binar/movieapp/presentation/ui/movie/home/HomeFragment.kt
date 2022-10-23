@@ -11,10 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.movieapp.databinding.FragmentHomeBinding
-import com.binar.movieapp.di.MovieServiceLocator
-import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.presentation.ui.movie.home.adapter.HomeAdapter
-import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.wrapper.Resource
 import dagger.hilt.android.AndroidEntryPoint
 

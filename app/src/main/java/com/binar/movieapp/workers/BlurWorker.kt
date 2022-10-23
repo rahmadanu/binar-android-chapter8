@@ -3,7 +3,6 @@ package com.binar.movieapp.workers
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.text.TextUtils
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters

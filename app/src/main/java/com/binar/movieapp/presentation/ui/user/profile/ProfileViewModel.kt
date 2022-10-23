@@ -1,6 +1,5 @@
 package com.binar.movieapp.presentation.ui.user.profile
 
-import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
@@ -14,11 +13,10 @@ import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.data.repository.UserRepository
 import com.binar.movieapp.workers.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
-import java.util.Calendar
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel

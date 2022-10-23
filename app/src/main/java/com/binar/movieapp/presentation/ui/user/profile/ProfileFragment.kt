@@ -3,10 +3,8 @@ package com.binar.movieapp.presentation.ui.user.profile
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,9 +18,7 @@ import androidx.work.WorkInfo
 import com.binar.movieapp.R
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.databinding.FragmentProfileBinding
-import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.presentation.ui.user.MainActivity
-import com.binar.movieapp.util.viewModelFactory
 import com.binar.movieapp.workers.KEY_IMAGE_URI
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint

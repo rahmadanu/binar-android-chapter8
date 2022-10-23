@@ -1,7 +1,5 @@
 package com.binar.movieapp.di
 
-import com.binar.movieapp.data.local.database.user.UserLocalDataSource
-import com.binar.movieapp.data.local.database.user.UserLocalDataSourceImpl
 import com.binar.movieapp.data.local.preference.UserPreferenceDataSource
 import com.binar.movieapp.data.local.preference.UserPreferenceDataSourceImpl
 import com.binar.movieapp.data.network.datasource.MovieRemoteDataSource

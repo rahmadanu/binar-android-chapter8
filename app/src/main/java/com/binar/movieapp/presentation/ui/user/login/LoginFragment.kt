@@ -12,9 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
 import com.binar.movieapp.databinding.FragmentLoginBinding
-import com.binar.movieapp.di.UserServiceLocator
 import com.binar.movieapp.presentation.ui.movie.HomeActivity
-import com.binar.movieapp.util.viewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

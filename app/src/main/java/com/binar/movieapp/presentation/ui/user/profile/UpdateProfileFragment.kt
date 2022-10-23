@@ -21,16 +21,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import androidx.work.WorkInfo
 import com.binar.movieapp.R
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.databinding.FragmentUpdateProfileBinding
-import com.binar.movieapp.di.UserServiceLocator
-import com.binar.movieapp.util.viewModelFactory
-import com.binar.movieapp.workers.KEY_IMAGE_URI
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.ByteArrayOutputStream
