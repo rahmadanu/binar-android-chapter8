@@ -1,7 +1,9 @@
 package com.binar.movieapp.di
 
-import com.binar.movieapp.data.local.datasource.UserPreferenceDataSource
-import com.binar.movieapp.data.local.datasource.UserPreferenceDataSourceImpl
+import com.binar.movieapp.data.firebase.datasource.UserRemoteDataSource
+import com.binar.movieapp.data.firebase.datasource.UserRemoteDataSourceImpl
+import com.binar.movieapp.data.local.datasource.UserLocalDataSource
+import com.binar.movieapp.data.local.datasource.UserLocalDataSourceImpl
 import com.binar.movieapp.data.network.datasource.MovieRemoteDataSource
 import com.binar.movieapp.data.network.datasource.MovieRemoteDataSourceImpl
 import dagger.Binds
@@ -14,8 +16,11 @@ import dagger.hilt.components.SingletonComponent
 abstract class DataSourceModule {
 
     @Binds
-    abstract fun provideMovieDataSource(movieRemoteDataSourceImpl: MovieRemoteDataSourceImpl): MovieRemoteDataSource
+    abstract fun provideMovieRemoteDataSource(movieRemoteDataSourceImpl: MovieRemoteDataSourceImpl): MovieRemoteDataSource
 
     @Binds
-    abstract fun provideUserDataSource(userPreferenceDataSourceImpl: UserPreferenceDataSourceImpl): UserPreferenceDataSource
+    abstract fun provideUserLocalDataSource(userLocalDataSourceImpl: UserLocalDataSourceImpl): UserLocalDataSource
+
+    @Binds
+    abstract fun provideUserRemoteDataSource(userRemoteDataSourceImpl: UserRemoteDataSourceImpl): UserRemoteDataSource
 }

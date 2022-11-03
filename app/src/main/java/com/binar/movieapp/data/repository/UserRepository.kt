@@ -1,12 +1,15 @@
 package com.binar.movieapp.data.repository
 
-import com.binar.movieapp.data.local.datasource.UserPreferenceDataSource
+import com.binar.movieapp.data.firebase.datasource.UserRemoteDataSource
+import com.binar.movieapp.data.local.datasource.UserLocalDataSource
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.wrapper.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface UserRepository {
+    suspend fun createUserWithEmailAndPassword(username: String, email: String, password: String)
+
     suspend fun setUser(user: UserPreferences)
     suspend fun updateUser(user: UserPreferences)
     suspend fun setUserLogin(isLogin: Boolean)
@@ -17,30 +20,39 @@ interface UserRepository {
 }
 
 class UserRepositoryImpl @Inject constructor(
-    private val userPreferenceDataSource: UserPreferenceDataSource,
+    private val userLocalDataSource: UserLocalDataSource,
+    private val userRemoteDataSource: UserRemoteDataSource
 ): UserRepository {
+    override suspend fun createUserWithEmailAndPassword(
+        username: String,
+        email: String,
+        password: String
+    ) {
+        userRemoteDataSource.createUserWithEmailAndPassword(username, email, password)
+    }
+
     override suspend fun setUser(user: UserPreferences) {
-        userPreferenceDataSource.setUser(user)
+        userLocalDataSource.setUser(user)
     }
 
     override suspend fun updateUser(user: UserPreferences) {
-        userPreferenceDataSource.updateUser(user)
+        userLocalDataSource.updateUser(user)
     }
 
     override suspend fun setUserLogin(isLogin: Boolean) {
-        userPreferenceDataSource.setUserLogin(isLogin)
+        userLocalDataSource.setUserLogin(isLogin)
     }
 
     override suspend fun setProfileImage(image: String) {
-        userPreferenceDataSource.setProfileImage(image)
+        userLocalDataSource.setProfileImage(image)
     }
 
     override fun getUser(): Flow<UserPreferences> {
-        return userPreferenceDataSource.getUser()
+        return userLocalDataSource.getUser()
     }
 
     override fun getUserLogin(): Flow<Boolean> {
-        return userPreferenceDataSource.getUserLogin()
+        return userLocalDataSource.getUserLogin()
     }
 
     private suspend fun <T> proceed(coroutine: suspend () -> T): Resource<T> {

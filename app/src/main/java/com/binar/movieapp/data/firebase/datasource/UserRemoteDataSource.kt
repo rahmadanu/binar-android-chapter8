@@ -6,14 +6,14 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface UserRemoteDataSource {
-    suspend fun createUserWithEmailAndPassword(email: String, password: String)
+    suspend fun createUserWithEmailAndPassword(username: String, email: String, password: String)
 }
 
 class UserRemoteDataSourceImpl @Inject constructor(
     private val userFirestoreManager: UserFirestoreManager
 ): UserRemoteDataSource {
-    override suspend fun createUserWithEmailAndPassword(email: String, password: String) {
-        userFirestoreManager
+    override suspend fun createUserWithEmailAndPassword(username: String, email: String, password: String) {
+        userFirestoreManager.createUserWithEmailAndPassword(username, email, password)
     }
 
 }

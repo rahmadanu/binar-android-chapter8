@@ -13,6 +13,12 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val repository: UserRepository) : ViewModel(){
 
+    fun createUserWithEmailAndPassword(username: String, email: String, password: String) {
+        viewModelScope.launch {
+            repository.createUserWithEmailAndPassword(username, email, password)
+        }
+    }
+
     fun getUser(): LiveData<UserPreferences> {
         return repository.getUser().asLiveData()
     }

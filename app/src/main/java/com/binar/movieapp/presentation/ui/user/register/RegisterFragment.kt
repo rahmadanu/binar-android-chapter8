@@ -53,7 +53,8 @@ class RegisterFragment : Fragment() {
                 email = email,
                 password = password
             )
-            viewModel.registerUser(user)
+            //viewModel.registerUser(user)
+            viewModel.createUserWithEmailAndPassword(username, email, password)
             Log.d("register", "$id and $username and pass $password")
             navigateToLogin()
         }

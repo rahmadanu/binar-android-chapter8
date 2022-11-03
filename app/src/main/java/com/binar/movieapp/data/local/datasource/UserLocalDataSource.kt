@@ -5,7 +5,7 @@ import com.binar.movieapp.data.local.preference.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-interface UserPreferenceDataSource {
+interface UserLocalDataSource {
     suspend fun setUser(user: UserPreferences)
     suspend fun updateUser(user: UserPreferences)
     suspend fun setUserLogin(isLogin: Boolean)
@@ -15,9 +15,9 @@ interface UserPreferenceDataSource {
     fun getUserLogin(): Flow<Boolean>
 }
 
-class UserPreferenceDataSourceImpl @Inject constructor(
+class UserLocalDataSourceImpl @Inject constructor(
     private val userDataStore: UserDataStoreManager
-): UserPreferenceDataSource {
+): UserLocalDataSource {
     override suspend fun setUser(user: UserPreferences) {
         userDataStore.setUser(user)
     }
