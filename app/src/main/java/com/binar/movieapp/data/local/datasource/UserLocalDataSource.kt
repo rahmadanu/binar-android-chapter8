@@ -1,5 +1,7 @@
-package com.binar.movieapp.data.local.preference
+package com.binar.movieapp.data.local.datasource
 
+import com.binar.movieapp.data.local.preference.UserDataStoreManager
+import com.binar.movieapp.data.local.preference.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

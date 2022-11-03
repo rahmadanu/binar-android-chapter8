@@ -1,6 +1,6 @@
 package com.binar.movieapp.data.repository
 
-import com.binar.movieapp.data.local.preference.UserPreferenceDataSource
+import com.binar.movieapp.data.local.datasource.UserPreferenceDataSource
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.wrapper.Resource
 import kotlinx.coroutines.flow.Flow

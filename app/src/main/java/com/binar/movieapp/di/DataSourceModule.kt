@@ -1,7 +1,7 @@
 package com.binar.movieapp.di
 
-import com.binar.movieapp.data.local.preference.UserPreferenceDataSource
-import com.binar.movieapp.data.local.preference.UserPreferenceDataSourceImpl
+import com.binar.movieapp.data.local.datasource.UserPreferenceDataSource
+import com.binar.movieapp.data.local.datasource.UserPreferenceDataSourceImpl
 import com.binar.movieapp.data.network.datasource.MovieRemoteDataSource
 import com.binar.movieapp.data.network.datasource.MovieRemoteDataSourceImpl
 import dagger.Binds
