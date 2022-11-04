@@ -1,6 +1,7 @@
 package com.binar.movieapp.presentation.ui.user.login
 
 import android.util.Log
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -14,27 +15,22 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val repository: UserRepository) : ViewModel(){
 
-    var signInResult = false
-
     fun createUserWithEmailAndPassword(username: String, email: String, password: String) {
             repository.createUserWithEmailAndPassword(username, email, password)
             Log.d("signin", username + password)
     }
 
-   /* fun signInWithEmailAndPassword(email: String, password: String){
+   fun signInWithEmailAndPassword(email: String, password: String){
         viewModelScope.launch {
-            signInResult = repository.signInWithEmailAndPassword(email, password)
-            Log.d("signin", signInResult.toString())
+            repository.signInWithEmailAndPassword(email, password)
         }
-    }*/
+    }
 
+    fun isLoginSuccess(): Boolean = repository.isLoginSuccess()
 
-   /* fun getUserDetail() {
-        viewModelScope.launch {
-            repository.getUserDetail()
-        }
-    }*/
-
+    fun getUserDetail(fragment: Fragment) {
+        repository.getUserDetail(fragment)
+    }
 
     fun getUser(): LiveData<UserPreferences> {
         return repository.getUser().asLiveData()

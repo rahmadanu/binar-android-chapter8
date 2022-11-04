@@ -1,12 +1,14 @@
 package com.binar.movieapp.data.firebase.datasource
 
+import androidx.fragment.app.Fragment
 import com.binar.movieapp.data.firebase.authentication.UserAuthManager
 import javax.inject.Inject
 
 interface UserRemoteDataSource {
     fun createUserWithEmailAndPassword(username: String, email: String, password: String)
-    //suspend fun signInWithEmailAndPassword(email: String, password: String): Boolean
-    //suspend fun getUserDetail()
+    suspend fun signInWithEmailAndPassword(email: String, password: String)
+    fun isLoginSuccess(): Boolean
+    fun getUserDetail(fragment: Fragment)
 }
 
 class UserRemoteDataSourceImpl @Inject constructor(
@@ -16,15 +18,19 @@ class UserRemoteDataSourceImpl @Inject constructor(
         userAuthManager.createUserWithEmailAndPassword(username, email, password)
     }
 
-   /* override suspend fun signInWithEmailAndPassword(
+    override suspend fun signInWithEmailAndPassword(
         email: String,
         password: String,
-    ): Boolean {
+    ){
         return userAuthManager.signInWithEmailAndPassword(email, password)
-    }*/
+    }
 
-    /*override suspend fun getUserDetail() {
-        userAuthManager.getUserDetail()
-    }*/
+    override fun isLoginSuccess(): Boolean {
+        return userAuthManager.isLoginSuccess()
+    }
+
+    override fun getUserDetail(fragment: Fragment) {
+        userAuthManager.getUserDetail(fragment)
+    }
 
 }

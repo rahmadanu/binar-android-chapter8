@@ -1,5 +1,6 @@
 package com.binar.movieapp.data.repository
 
+import androidx.fragment.app.Fragment
 import com.binar.movieapp.data.firebase.datasource.UserRemoteDataSource
 import com.binar.movieapp.data.local.datasource.UserLocalDataSource
 import com.binar.movieapp.data.local.preference.UserPreferences
@@ -9,8 +10,9 @@ import javax.inject.Inject
 
 interface UserRepository {
     fun createUserWithEmailAndPassword(username: String, email: String, password: String)
-    //suspend fun signInWithEmailAndPassword(email: String, password: String): Boolean
-    //suspend fun getUserDetail()
+    suspend fun signInWithEmailAndPassword(email: String, password: String)
+    fun isLoginSuccess(): Boolean
+    fun getUserDetail(fragment: Fragment)
 
     suspend fun setUser(user: UserPreferences)
     suspend fun updateUser(user: UserPreferences)
@@ -33,16 +35,20 @@ class UserRepositoryImpl @Inject constructor(
         userRemoteDataSource.createUserWithEmailAndPassword(username, email, password)
     }
 
-    /*override suspend fun signInWithEmailAndPassword(
+    override suspend fun signInWithEmailAndPassword(
         email: String,
         password: String,
-    ) : Boolean {
+    ){
         return userRemoteDataSource.signInWithEmailAndPassword(email, password)
-    }*/
+    }
 
-//    override suspend fun getUserDetail() {
-//        userRemoteDataSource.getUserDetail()
-//    }
+    override fun isLoginSuccess(): Boolean {
+        return userRemoteDataSource.isLoginSuccess()
+    }
+
+    override fun getUserDetail(fragment: Fragment) {
+        userRemoteDataSource.getUserDetail(fragment)
+    }
 
     override suspend fun setUser(user: UserPreferences) {
         userLocalDataSource.setUser(user)

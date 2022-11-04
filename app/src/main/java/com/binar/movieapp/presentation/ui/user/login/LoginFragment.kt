@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
+import com.binar.movieapp.data.firebase.model.User
 import com.binar.movieapp.databinding.FragmentLoginBinding
 import com.binar.movieapp.presentation.ui.movie.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +38,10 @@ class LoginFragment : Fragment() {
 
         isUserLoggedIn()
 
-        binding.btnLogin.setOnClickListener { checkLogin() }
+        binding.btnLogin.setOnClickListener {
+            signIn()
+            checkLogin()
+        }
 
         binding.tvRegisterHere.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
@@ -45,29 +49,19 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkLogin() {
+        val isLoginSuccess = viewModel.isLoginSuccess()
+        if (isLoginSuccess) {
+            navigateToHome()
+            viewModel.setUserLogin(true)
+        }
+    }
+
+    private fun signIn() {
         if (validateInput()) {
             val username = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
 
-/*            viewModel.signInWithEmailAndPassword(username, password)
-
-            if (viewModel.signInResult) {
-                navigateToHome()
-                setLoginState("Login Success")
-                viewModel.setUserLogin(true)
-            } else {
-                setLoginState("Wrong username or password")
-            }*/
-            viewModel.getUser().observe(viewLifecycleOwner) { user ->
-                Log.d("get", user.username + " and " + user.password)
-                if (user.username == username && user.password == password) {
-                    navigateToHome()
-                    setLoginState("Login Success")
-                    viewModel.setUserLogin(true)
-                } else {
-                    setLoginState("Wrong username or password")
-                }
-            }
+            viewModel.signInWithEmailAndPassword(username, password)
         }
     }
 
@@ -99,9 +93,12 @@ class LoginFragment : Fragment() {
         return isValid
     }
 
-    private fun navigateToHome() {
+    fun navigateToHome(user: User? = null) {
         viewModel.setUserLogin(true)
+
         val intent = Intent(requireContext(), HomeActivity::class.java).apply {
+            putExtra(EXTRA_USERNAME, user?.username)
+            Log.d("user", user.toString())
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         }
         startActivity(intent)

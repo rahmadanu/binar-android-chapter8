@@ -2,16 +2,19 @@ package com.binar.movieapp.data.firebase.authentication
 
 import android.content.Context
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.binar.movieapp.data.firebase.model.User
+import com.binar.movieapp.presentation.ui.user.login.LoginFragment
+import com.binar.movieapp.presentation.ui.user.profile.ProfileFragment
 import com.binar.movieapp.util.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-
 class UserAuthManager(val context: Context) {
     val auth = FirebaseAuth.getInstance()
     val firestore =  FirebaseFirestore.getInstance()
+    private var isLoginSuccess = false
 
     fun createUserWithEmailAndPassword(username: String, email: String, password: String) {
         Log.d("user", "running with $username and $password")
@@ -34,26 +37,29 @@ class UserAuthManager(val context: Context) {
                 Log.d("user", "failure: ${it.message}")
             }
     }
-/*
 
-    suspend fun signInWithEmailAndPassword(email: String, password: String): Boolean {
-        var isLoginSuccess = false
+    suspend fun signInWithEmailAndPassword(email: String, password: String) {
+        Log.d("signin", isLoginSuccess.toString())
+
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    //getUserDetail()
-                    isLoginSuccess = true
-                } else {
-
-                }
+                isLoginSuccess = it.isSuccessful
+                Utils.showFailureToast(context, "Login success", false)
             }
             .addOnFailureListener {
+                isLoginSuccess = false
+                Log.d("signin", it.message.toString())
+                Utils.showFailureToast(context, it.message.toString(), true)
             }
-        return isLoginSuccess
+        Log.d("signin", isLoginSuccess.toString())
     }
-*/
 
-    fun getCurrentUserId(): String {
+    @JvmName("isLoginSuccess1")
+    fun isLoginSuccess(): Boolean {
+      return isLoginSuccess
+    }
+
+    private fun getCurrentUserId(): String {
         val currentUser = FirebaseAuth.getInstance().currentUser
         var currentUserId = ""
 
@@ -75,21 +81,21 @@ class UserAuthManager(val context: Context) {
             }
     }
 
-    fun getUserDetail() {
+    fun getUserDetail(fragment: Fragment) {
         firestore.collection(USER)
             .document(getCurrentUserId())
             .get()
             .addOnSuccessListener { document ->
                 val user = document.toObject(User::class.java)!!
-/*
+
                 when (fragment) {
                     is LoginFragment -> {
                         fragment.navigateToHome(user)
                     }
-                    is ProfileFragment -> {
+/*                    is ProfileFragment -> {
                         fragment.bindDataToView(user)
-                    }
-                }*/
+                    }*/
+                }
             }
             .addOnFailureListener {
 
@@ -100,3 +106,4 @@ class UserAuthManager(val context: Context) {
         private const val USER = "user"
     }
 }
+

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binar.movieapp.databinding.FragmentHomeBinding
 import com.binar.movieapp.presentation.ui.movie.home.adapter.HomeAdapter
+import com.binar.movieapp.presentation.ui.user.login.LoginFragment
 import com.binar.movieapp.wrapper.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,10 +57,11 @@ class HomeFragment : Fragment() {
     }
 
     private fun getInitialUser() {
-        viewModel.getUser().observe(viewLifecycleOwner) {
-            it?.let { binding.tvUsername.text = it.username
-                Log.d("inituser", it.username.toString())}
-        }
+
+        val intent = activity?.intent?.extras?.getString(LoginFragment.EXTRA_USERNAME, "null")
+        Log.d("inituser", intent.toString())
+
+        binding.tvUsername.text = intent.toString()
     }
 
     private fun observeData() {
