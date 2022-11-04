@@ -22,7 +22,9 @@ import com.binar.movieapp.databinding.FragmentProfileBinding
 import com.binar.movieapp.presentation.ui.user.MainActivity
 import com.binar.movieapp.workers.KEY_IMAGE_URI
 import com.bumptech.glide.Glide
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -33,6 +35,9 @@ class ProfileFragment : Fragment() {
     private val viewModel: ProfileViewModel by viewModels()
 
     private lateinit var userDetails: User
+
+    @Inject
+    lateinit var analytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +59,9 @@ class ProfileFragment : Fragment() {
     private fun setOnClickListener() {
         binding.btnUpdateProfile.setOnClickListener {
             navigateToUpdateProfile()
+            val bundle = Bundle()
+            bundle.putString(FirebaseAnalytics.Param.METHOD, "update profile")
+            analytics.logEvent("click_update", bundle)
         }
         binding.btnLogout.setOnClickListener {
             viewModel.setUserLogin(false)
@@ -61,7 +69,8 @@ class ProfileFragment : Fragment() {
             activity?.finish()
         }
         binding.btnBlurVersion.setOnClickListener {
-            viewModel.applyBlur(3)
+            //viewModel.applyBlur(3)
+            throw RuntimeException("Test Crash") // Force a crash
         }
         binding.btnSeeBlur.setOnClickListener {
             viewModel.outputUri?.let { currentUri ->

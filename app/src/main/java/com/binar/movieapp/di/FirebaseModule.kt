@@ -22,4 +22,10 @@ object FirebaseModule {
         return UserAuthManager(context)
     }
 
+    @Provides
+    @Singleton
+    fun provideFirebaseAnalytics(): FirebaseAnalytics {
+        return Firebase.analytics
+    }
+
 }
