@@ -49,6 +49,15 @@ class LoginFragment : Fragment() {
             val username = binding.etUsername.text.toString()
             val password = binding.etPassword.text.toString()
 
+/*            viewModel.signInWithEmailAndPassword(username, password)
+
+            if (viewModel.signInResult) {
+                navigateToHome()
+                setLoginState("Login Success")
+                viewModel.setUserLogin(true)
+            } else {
+                setLoginState("Wrong username or password")
+            }*/
             viewModel.getUser().observe(viewLifecycleOwner) { user ->
                 Log.d("get", user.username + " and " + user.password)
                 if (user.username == username && user.password == password) {
@@ -91,6 +100,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateToHome() {
+        viewModel.setUserLogin(true)
         val intent = Intent(requireContext(), HomeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         }

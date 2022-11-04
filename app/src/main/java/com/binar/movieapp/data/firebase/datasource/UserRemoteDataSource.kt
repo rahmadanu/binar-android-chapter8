@@ -1,19 +1,30 @@
 package com.binar.movieapp.data.firebase.datasource
 
-import com.binar.movieapp.data.firebase.firestore.UserFirestoreManager
-import com.binar.movieapp.data.local.preference.UserPreferences
-import kotlinx.coroutines.flow.Flow
+import com.binar.movieapp.data.firebase.authentication.UserAuthManager
 import javax.inject.Inject
 
 interface UserRemoteDataSource {
-    suspend fun createUserWithEmailAndPassword(username: String, email: String, password: String)
+    fun createUserWithEmailAndPassword(username: String, email: String, password: String)
+    //suspend fun signInWithEmailAndPassword(email: String, password: String): Boolean
+    //suspend fun getUserDetail()
 }
 
 class UserRemoteDataSourceImpl @Inject constructor(
-    private val userFirestoreManager: UserFirestoreManager
+    private val userAuthManager: UserAuthManager
 ): UserRemoteDataSource {
-    override suspend fun createUserWithEmailAndPassword(username: String, email: String, password: String) {
-        userFirestoreManager.createUserWithEmailAndPassword(username, email, password)
+    override fun createUserWithEmailAndPassword(username: String, email: String, password: String) {
+        userAuthManager.createUserWithEmailAndPassword(username, email, password)
     }
+
+   /* override suspend fun signInWithEmailAndPassword(
+        email: String,
+        password: String,
+    ): Boolean {
+        return userAuthManager.signInWithEmailAndPassword(email, password)
+    }*/
+
+    /*override suspend fun getUserDetail() {
+        userAuthManager.getUserDetail()
+    }*/
 
 }

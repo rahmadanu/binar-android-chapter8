@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface UserRepository {
-    suspend fun createUserWithEmailAndPassword(username: String, email: String, password: String)
+    fun createUserWithEmailAndPassword(username: String, email: String, password: String)
+    //suspend fun signInWithEmailAndPassword(email: String, password: String): Boolean
+    //suspend fun getUserDetail()
 
     suspend fun setUser(user: UserPreferences)
     suspend fun updateUser(user: UserPreferences)
@@ -23,13 +25,24 @@ class UserRepositoryImpl @Inject constructor(
     private val userLocalDataSource: UserLocalDataSource,
     private val userRemoteDataSource: UserRemoteDataSource
 ): UserRepository {
-    override suspend fun createUserWithEmailAndPassword(
+    override fun createUserWithEmailAndPassword(
         username: String,
         email: String,
         password: String
     ) {
         userRemoteDataSource.createUserWithEmailAndPassword(username, email, password)
     }
+
+    /*override suspend fun signInWithEmailAndPassword(
+        email: String,
+        password: String,
+    ) : Boolean {
+        return userRemoteDataSource.signInWithEmailAndPassword(email, password)
+    }*/
+
+//    override suspend fun getUserDetail() {
+//        userRemoteDataSource.getUserDetail()
+//    }
 
     override suspend fun setUser(user: UserPreferences) {
         userLocalDataSource.setUser(user)

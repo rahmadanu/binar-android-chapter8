@@ -142,7 +142,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun bindDataToView(user: UserPreferences?) {
+    fun bindDataToView(user: UserPreferences?) {
         user?.let {
             binding.apply {
                 tvUsername.text = getString(R.string.profile_username, user.username)
