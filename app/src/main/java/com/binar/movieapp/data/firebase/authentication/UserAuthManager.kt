@@ -92,9 +92,9 @@ class UserAuthManager(val context: Context) {
                     is LoginFragment -> {
                         fragment.navigateToHome(user)
                     }
-/*                    is ProfileFragment -> {
+                    is ProfileFragment -> {
                         fragment.bindDataToView(user)
-                    }*/
+                    }
                 }
             }
             .addOnFailureListener {

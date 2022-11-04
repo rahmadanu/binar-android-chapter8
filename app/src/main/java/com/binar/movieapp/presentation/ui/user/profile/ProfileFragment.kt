@@ -16,6 +16,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.work.WorkInfo
 import com.binar.movieapp.R
+import com.binar.movieapp.data.firebase.model.User
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.databinding.FragmentProfileBinding
 import com.binar.movieapp.presentation.ui.user.MainActivity
@@ -30,6 +31,8 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: ProfileViewModel by viewModels()
+
+    private lateinit var userDetails: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,10 +53,7 @@ class ProfileFragment : Fragment() {
 
     private fun setOnClickListener() {
         binding.btnUpdateProfile.setOnClickListener {
-            val options = NavOptions.Builder()
-                .setPopUpTo(R.id.profileFragment, false)
-                .build()
-            findNavController().navigate(R.id.action_profileFragment_to_updateProfileFragment, null, options)
+            navigateToUpdateProfile()
         }
         binding.btnLogout.setOnClickListener {
             viewModel.setUserLogin(false)
@@ -78,7 +78,6 @@ class ProfileFragment : Fragment() {
             viewModel.cancelWork()
         }
     }
-
 
     private fun workInfosObserver(): Observer<List<WorkInfo>> {
         return Observer { listOfWorkInfo ->
@@ -113,6 +112,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
+
     /**
      * Shows and hides views for when the Activity is processing an image
      */
@@ -137,13 +137,15 @@ class ProfileFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.getUser().observe(viewLifecycleOwner) {
+/*        viewModel.getUser().observe(viewLifecycleOwner) {
             bindDataToView(it)
-        }
+        }*/
+        viewModel.getUserDetail(this@ProfileFragment)
     }
 
-    fun bindDataToView(user: UserPreferences?) {
-        user?.let {
+    fun bindDataToView(user: User) {
+        userDetails = user
+        user.let {
             binding.apply {
                 tvUsername.text = getString(R.string.profile_username, user.username)
                 tvEmail.text = getString(R.string.profile_email, user.email)
@@ -151,7 +153,7 @@ class ProfileFragment : Fragment() {
                 tvDateOfBirth.text = getString(R.string.profile_date_of_birth, user.dateOfBirth)
                 tvAddress.text = getString(R.string.profile_address, user.address)
 
-                user.profileImage?.let {
+                user.profileImage.let {
                     if (it.isEmpty().not()) {
                         Glide.with(this@ProfileFragment)
                             .load(convertStringToBitmap(it))
@@ -168,8 +170,21 @@ class ProfileFragment : Fragment() {
         return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
 
+    private fun navigateToUpdateProfile() {
+        val options = NavOptions.Builder()
+            .setPopUpTo(R.id.profileFragment, false)
+            .build()
+        val bundle = Bundle()
+        bundle.putParcelable(USER_DETAILS, userDetails)
+        findNavController().navigate(R.id.action_profileFragment_to_updateProfileFragment, bundle, options)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val USER_DETAILS = "user_details"
     }
 }

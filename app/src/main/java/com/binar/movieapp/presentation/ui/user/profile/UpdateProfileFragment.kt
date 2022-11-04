@@ -24,6 +24,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.binar.movieapp.R
+import com.binar.movieapp.data.firebase.model.User
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.databinding.FragmentUpdateProfileBinding
 import com.bumptech.glide.Glide
@@ -64,9 +65,11 @@ class UpdateProfileFragment : Fragment() {
     }
 
     private fun observeData() {
-        viewModel.getUser().observe(viewLifecycleOwner) {
+/*        viewModel.getUser().observe(viewLifecycleOwner) {
             bindDataToForm(it)
-        }
+        }*/
+        val user = arguments?.getParcelable<User>(ProfileFragment.USER_DETAILS)
+        bindDataToForm(user)
     }
 
     private fun setOnClickListener() {
@@ -103,7 +106,7 @@ class UpdateProfileFragment : Fragment() {
         }
     }
 
-    private fun bindDataToForm(user: UserPreferences?) {
+    private fun bindDataToForm(user: User?) {
         Log.d("profile", user.toString())
         user?.let {
             binding.apply {

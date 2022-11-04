@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -21,6 +22,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val repository: UserRepository, @ApplicationContext application: Context): ViewModel() {
+
+    fun getUserDetail(fragment: Fragment) {
+        repository.getUserDetail(fragment)
+    }
 
     fun getUser(): LiveData<UserPreferences> {
         return repository.getUser().asLiveData()
