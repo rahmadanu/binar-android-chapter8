@@ -1,11 +1,15 @@
 package com.binar.movieapp.data.firebase.authentication
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.fragment.app.Fragment
+import androidx.room.Update
 import com.binar.movieapp.data.firebase.model.User
+import com.binar.movieapp.presentation.ui.movie.home.HomeFragment
 import com.binar.movieapp.presentation.ui.user.login.LoginFragment
 import com.binar.movieapp.presentation.ui.user.profile.ProfileFragment
+import com.binar.movieapp.presentation.ui.user.profile.UpdateProfileFragment
 import com.binar.movieapp.util.Utils
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -95,10 +99,35 @@ class UserAuthManager(val context: Context) {
                     is ProfileFragment -> {
                         fragment.bindDataToView(user)
                     }
+                    is HomeFragment -> {
+                        fragment.getInitialUser(user)
+                    }
                 }
             }
             .addOnFailureListener {
+                Log.e(fragment.javaClass.simpleName, "Error while getting user detail")
+            }
+    }
 
+    fun updateUserProfile(fragment: Fragment, userHashMap: HashMap<String, Any>) {
+        firestore.collection(USER)
+            .document(getCurrentUserId())
+            .update(userHashMap)
+            .addOnSuccessListener {
+                when (fragment) {
+                    is UpdateProfileFragment -> {
+                        fragment.activity?.finish()
+                    }
+                }
+            }
+
+            .addOnFailureListener {
+                when (fragment) {
+                    is UpdateProfileFragment -> {
+                        fragment.activity?.finish()
+                    }
+                }
+                Log.e(fragment.javaClass.simpleName, "Error while updating the user details")
             }
     }
 

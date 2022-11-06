@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.binar.movieapp.data.firebase.model.User
 import com.binar.movieapp.databinding.FragmentHomeBinding
 import com.binar.movieapp.presentation.ui.movie.home.adapter.HomeAdapter
 import com.binar.movieapp.presentation.ui.user.login.LoginFragment
@@ -38,7 +39,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getInitialUser()
         initList()
         observeData()
     }
@@ -56,15 +56,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun getInitialUser() {
-
-        val intent = activity?.intent?.extras?.getString(LoginFragment.EXTRA_USERNAME, "null")
-        Log.d("inituser", intent.toString())
-
-        binding.tvUsername.text = intent.toString()
+    fun getInitialUser(user: User) {
+        binding.tvUsername.text = user.username
     }
 
     private fun observeData() {
+        viewModel.getUserDetail(this@HomeFragment)
+
         viewModel.homeMovieListResult.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {

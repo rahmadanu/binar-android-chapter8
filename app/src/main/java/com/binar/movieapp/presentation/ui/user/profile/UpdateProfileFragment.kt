@@ -38,6 +38,7 @@ class UpdateProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: ProfileViewModel by viewModels()
+    private lateinit var user: User
 
     private val REQUEST_CODE_PERMISSION = 3
 
@@ -68,7 +69,7 @@ class UpdateProfileFragment : Fragment() {
 /*        viewModel.getUser().observe(viewLifecycleOwner) {
             bindDataToForm(it)
         }*/
-        val user = arguments?.getParcelable<User>(ProfileFragment.USER_DETAILS)
+        user = arguments?.getParcelable<User>(ProfileFragment.USER_DETAILS)!!
         bindDataToForm(user)
     }
 
@@ -78,7 +79,8 @@ class UpdateProfileFragment : Fragment() {
         }
         binding.btnUpdate.setOnClickListener {
             if (validateInput()) {
-                viewModel.updateUser(parseFormIntoData())
+                //viewModel.updateUser(parseFormIntoData())
+                updateUserProfileDetails()
 
                 val options = NavOptions.Builder()
                     .setPopUpTo(R.id.updateProfileFragment, true)
@@ -125,6 +127,37 @@ class UpdateProfileFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun updateUserProfileDetails() {
+        val userHashMap = HashMap<String, Any>()
+
+        val username = binding.etUsername.text.toString().trim()
+        if (username != user.username) {
+            userHashMap[USERNAME] = username
+        }
+
+        val email = binding.etEmail.text.toString().trim()
+        if (email != user.email) {
+            userHashMap[EMAIL] = email
+        }
+
+        val fullName = binding.etFullName.text.toString().trim()
+        if (fullName != user.fullName) {
+            userHashMap[FULL_NAME] = fullName
+        }
+
+        val dateOfBirth = binding.etDateOfBirth.text.toString().trim()
+        if (dateOfBirth != user.dateOfBirth) {
+            userHashMap[DATE_OF_BIRTH] = dateOfBirth
+        }
+
+        val address = binding.etAddress.text.toString().trim()
+        if (address != user.address) {
+            userHashMap[ADDRESS] = address
+        }
+
+        viewModel.updateUserProfile(this@UpdateProfileFragment, userHashMap)
     }
 
     private fun checkPermissions() {
@@ -233,5 +266,13 @@ class UpdateProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val USERNAME = "username"
+        private const val EMAIL = "email"
+        private const val FULL_NAME = "fullName"
+        private const val DATE_OF_BIRTH = "dateOfBirth"
+        private const val ADDRESS = "address"
     }
 }

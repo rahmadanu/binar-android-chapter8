@@ -13,6 +13,7 @@ interface UserRepository {
     suspend fun signInWithEmailAndPassword(email: String, password: String)
     fun isLoginSuccess(): Boolean
     fun getUserDetail(fragment: Fragment)
+    fun updateUserProfile(fragment: Fragment, userHashMap: HashMap<String, Any>)
 
     suspend fun setUser(user: UserPreferences)
     suspend fun updateUser(user: UserPreferences)
@@ -48,6 +49,10 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun getUserDetail(fragment: Fragment) {
         userRemoteDataSource.getUserDetail(fragment)
+    }
+
+    override fun updateUserProfile(fragment: Fragment, userHashMap: HashMap<String, Any>) {
+        userRemoteDataSource.updateUserProfile(fragment, userHashMap)
     }
 
     override suspend fun setUser(user: UserPreferences) {

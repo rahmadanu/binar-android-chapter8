@@ -1,5 +1,6 @@
 package com.binar.movieapp.presentation.ui.movie.home
 
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import com.binar.movieapp.data.local.preference.UserPreferences
 import com.binar.movieapp.data.network.model.HomeMovie
@@ -37,6 +38,10 @@ class HomeViewModel @Inject constructor(private val movieRepository: MovieReposi
                 _homeMovieListResult.postValue(Resource.Success(homeMovieList))
             }
         }
+    }
+
+    fun getUserDetail(fragment: Fragment) {
+        userRepository.getUserDetail(fragment)
     }
 
     fun getUser(): LiveData<UserPreferences> {

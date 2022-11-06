@@ -28,10 +28,6 @@ class LoginViewModel @Inject constructor(private val repository: UserRepository)
 
     fun isLoginSuccess(): Boolean = repository.isLoginSuccess()
 
-    fun getUserDetail(fragment: Fragment) {
-        repository.getUserDetail(fragment)
-    }
-
     fun getUser(): LiveData<UserPreferences> {
         return repository.getUser().asLiveData()
     }

@@ -27,6 +27,10 @@ class ProfileViewModel @Inject constructor(private val repository: UserRepositor
         repository.getUserDetail(fragment)
     }
 
+    fun updateUserProfile(fragment: Fragment, userHashMap: HashMap<String, Any>) {
+        repository.updateUserProfile(fragment, userHashMap)
+    }
+
     fun getUser(): LiveData<UserPreferences> {
         return repository.getUser().asLiveData()
     }

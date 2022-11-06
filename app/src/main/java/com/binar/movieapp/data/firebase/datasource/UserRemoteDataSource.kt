@@ -9,6 +9,7 @@ interface UserRemoteDataSource {
     suspend fun signInWithEmailAndPassword(email: String, password: String)
     fun isLoginSuccess(): Boolean
     fun getUserDetail(fragment: Fragment)
+    fun updateUserProfile(fragment: Fragment, userHashMap: HashMap<String, Any>)
 }
 
 class UserRemoteDataSourceImpl @Inject constructor(
@@ -31,6 +32,10 @@ class UserRemoteDataSourceImpl @Inject constructor(
 
     override fun getUserDetail(fragment: Fragment) {
         userAuthManager.getUserDetail(fragment)
+    }
+
+    override fun updateUserProfile(fragment: Fragment, userHashMap: HashMap<String, Any>) {
+        userAuthManager.updateUserProfile(fragment, userHashMap)
     }
 
 }
