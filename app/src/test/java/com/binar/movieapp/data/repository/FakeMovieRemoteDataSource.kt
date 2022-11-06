@@ -22,7 +22,7 @@ class FakeMovieRemoteDataSource(private val apiService: MovieApiService): MovieR
     }
 
     override suspend fun searchMovie(query: String): Search {
-        TODO("Not yet implemented")
+        return apiService.searchMovie(query = query)
     }
 
     override suspend fun getDetail(id: Int): DetailMovie {

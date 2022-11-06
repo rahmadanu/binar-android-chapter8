@@ -80,8 +80,7 @@ class DetailViewModelTest {
     @Test
     fun `when getDetail should be null and return Error`() {
         //given
-        val exception =  NetworkErrorException("Connection failure")
-        val respDetail = mockk<Resource<DetailMovie>>()
+        val respDetail = mockk<Resource.Error<DetailMovie>>()
 
         every {
             runBlocking {
@@ -95,7 +94,7 @@ class DetailViewModelTest {
         //then
         val result = viewModel.detailResult.getOrAwaitValue()
         assertNotNull(result)
-        //assertEquals(respDetail, )
+        assertNotEquals(respDetail, result)
     }
 
     @After

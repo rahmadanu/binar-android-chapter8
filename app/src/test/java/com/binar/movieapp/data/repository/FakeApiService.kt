@@ -10,6 +10,7 @@ import com.binar.movieapp.util.DummyData
 
 class FakeApiService: MovieApiService {
     private val dummyResponse = DummyData.generateDummyPopularMovies()
+
     override suspend fun getPopular(language: String, page: Int): Popular {
         return dummyResponse
     }
@@ -28,7 +29,7 @@ class FakeApiService: MovieApiService {
         page: Int,
         include: Boolean
     ): Search {
-        TODO("Not yet implemented")
+        return DummyData.generateSearchResponse(query)
     }
 
     override suspend fun getDetail(id: Int, language: String): DetailMovie {

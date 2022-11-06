@@ -10,6 +10,7 @@ import com.binar.movieapp.data.network.service.MovieApiService
 import com.binar.movieapp.util.DummyData
 import com.binar.movieapp.wrapper.Resource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
@@ -63,5 +64,36 @@ class MovieRepositoryTest {
         Assert.assertTrue(actualResult.data.contains(samplePopularMovie[0]))
         Assert.assertTrue(actualResult.data.contains(sample))
         Assert.assertFalse(actualResult.data.contains(sample2))
+    }
+
+
+    @Test
+    fun `when search query is empty`() = runTest {
+        //given
+        val query = ""
+
+        //when
+        repository.searchMovie(query)
+
+        //then
+        val actual = repository.searchMovie(query)
+        Assert.assertTrue(actual.payload.isNullOrEmpty())
+    }
+
+    @Test
+    fun `when a movie popularity is greather than another movie`() = runTest {
+        val samplePopularMovie = ArrayList<HomeMovieItem>()
+        val sample = HomeMovieItem(
+            title = "Avatar1",
+            popularity = 1000.0
+        )
+        val sample2 = HomeMovieItem(
+            title = "Avatar2",
+            popularity = 2000.0
+        )
+        samplePopularMovie.add(sample)
+        samplePopularMovie.add(sample2)
+
+        Assert.assertTrue(sample2.popularity!! > sample.popularity!!)
     }
 }
