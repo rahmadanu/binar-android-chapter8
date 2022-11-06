@@ -58,7 +58,7 @@ class LoginFragment : Fragment() {
 
     private fun signIn() {
         if (validateInput()) {
-            val username = binding.etUsername.text.toString()
+            val username = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
 
             viewModel.signInWithEmailAndPassword(username, password)
@@ -79,11 +79,11 @@ class LoginFragment : Fragment() {
 
     private fun validateInput(): Boolean {
         var isValid = true
-        val username = binding.etUsername.text.toString()
+        val username = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
         if (username.isEmpty()) {
             isValid = false
-            binding.etUsername.error = "Username must not be empty"
+            binding.etEmail.error = "Username must not be empty"
         }
         if (password.isEmpty()) {
             isValid = false

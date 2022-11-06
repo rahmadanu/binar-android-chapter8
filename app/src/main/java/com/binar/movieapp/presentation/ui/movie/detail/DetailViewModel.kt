@@ -1,9 +1,6 @@
 package com.binar.movieapp.presentation.ui.movie.detail
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.binar.movieapp.data.network.model.detail.DetailMovie
 import com.binar.movieapp.data.repository.MovieRepository
 import com.binar.movieapp.wrapper.Resource

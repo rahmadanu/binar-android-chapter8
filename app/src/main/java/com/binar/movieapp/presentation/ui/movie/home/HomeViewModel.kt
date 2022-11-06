@@ -21,6 +21,8 @@ class HomeViewModel @Inject constructor(private val movieRepository: MovieReposi
         getHomeMovieList()
     }
 
+    fun getMovieList(): MutableLiveData<Resource<List<HomeMovie>>> = _homeMovieListResult
+
     private fun getHomeMovieList() {
         viewModelScope.launch(Dispatchers.IO) {
             _homeMovieListResult.postValue(Resource.Loading())
