@@ -17,6 +17,7 @@ class DetailViewModel @Inject constructor(private val repository: MovieRepositor
 
     fun getDetail(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
+            _detailResult.postValue(Resource.Loading())
             val data = repository.getDetail(id)
             viewModelScope.launch(Dispatchers.Main) {
                 _detailResult.postValue(data)

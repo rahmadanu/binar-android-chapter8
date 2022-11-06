@@ -40,6 +40,9 @@ android {
     buildFeatures {
         viewBinding true
     }
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 
     def keyPropertiesFile = rootProject.file("key.properties")
     def keyProperties = new Properties()
@@ -79,6 +82,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
+    implementation 'androidx.test:core-ktx:1.4.0'
+    implementation 'androidx.test.ext:junit-ktx:1.1.3'
 
     //special testing
     testImplementation "androidx.arch.core:core-testing:2.1.0" // InstantTaskExecutorRule
@@ -87,13 +92,14 @@ dependencies {
     testImplementation "io.mockk:mockk:1.13.2"
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
-    testImplementation 'org.mockito:mockito-core:3.12.4'
-    testImplementation 'org.mockito:mockito-inline:3.12.4'
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1" //TestDispatcher
-
+    testImplementation 'org.mockito:mockito-core:4.4.0'
+    testImplementation 'org.mockito:mockito-inline:4.4.0'
+    testImplementation "androidx.arch.core:core-testing:2.1.0" // InstantTaskExecutorRule
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1" //TestCoroutineDispatcher
 
     //dagger hilt
     implementation "com.google.dagger:hilt-android:2.44"
+    testImplementation 'junit:junit:4.12'
     testImplementation 'junit:junit:4.12'
     kapt "com.google.dagger:hilt-compiler:2.44"
 
