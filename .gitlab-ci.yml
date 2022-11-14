@@ -1,0 +1,42 @@
+image: openjdk:11-jdk #Menentukan Docker Image
+
+variables:
+  ANDROID_COMPILE_SDK: "32" #set compile SDK version //30
+  ANDROID_BUILD_TOOLS: "33.0.0" #set build tool version //30.0.2
+  ANDROID_SDK_TOOLS:  "7583922" #set SDK tool build number kita dapat mencari tahunya di sini https://developer.android.com/studio/releases/sdk-tools //4333796
+
+before_script:
+  #Installing Packages
+  - apt-get --quiet update --yes
+  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
+  - export ANDROID_HOME=$PWD/android-sdk-linux
+
+  #Installing Android SDK
+  - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
+  - unzip -d android-sdk-linux android-sdk.zip
+  - echo y | android-sdk-linux/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} --licenses
+  - echo y | android-sdk-linux/cmdline-tools/bin/sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools" "build-tools;${ANDROID_BUILD_TOOLS}" "platforms;android-${ANDROID_COMPILE_SDK}" >/dev/null
+
+  #Setting environment variable
+  - export PATH=$PATH:$PWD/android-sdk-linux/platform-tools/
+  - chmod +x ./gradlew #set executable permission
+
+  # nonaktifkan sementara untuk memeriksa kesalahan EPIPE dan gunakan 'yes' untuk menerima semua lisensi
+  - set +o pipefail
+  - set -o pipefail
+
+stages:
+  - build_release_android
+
+build_release_android:
+  stage: build_release_android
+  script:
+    - mkdir /PlayJson
+    - ./gradlew lint
+    - ./gradlew build
+    - ./gradlew asssembleDebug
+  only:
+    - mastera
+  artifacts:
+    paths:
+      - ./app/build/outputs/

@@ -8,9 +8,18 @@ plugins {
     id 'com.google.dagger.hilt.android'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'com.github.triplet.play'
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\sadew\\AndroidStudioProjects\\binar-android-chapter7\\app\\keystorechapter7.jks')
+            storePassword 'keystorechapter7'
+            keyAlias 'keystorechapter7'
+            keyPassword 'keystorechapter7'
+        }
+    }
     namespace 'com.binar.movieapp'
     compileSdk 32
 
@@ -22,12 +31,17 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -104,8 +118,7 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:2.44"
 
     //work manager
-    def work_version = "2.7.1"
-    implementation "androidx.work:work-runtime-ktx:$work_version"
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
 
     //datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
