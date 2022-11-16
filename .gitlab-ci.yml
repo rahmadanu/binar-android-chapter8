@@ -36,7 +36,7 @@ build_release_android:
     - ./gradlew build
     - ./gradlew asssembleDebug
   only:
-    - mastera
+    - master
   artifacts:
     paths:
       - ./app/build/outputs/
