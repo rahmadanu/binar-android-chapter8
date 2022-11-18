@@ -22,7 +22,9 @@ jobs:
           command: "echo Hello, World!"
 
   build:
-    executor: android/android-machine
+    name: android/android-machine
+      resource-class: large
+      tag: 2021.10.1
     steps:
       - checkout
       - restore_cache:
