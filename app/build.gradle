@@ -110,6 +110,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-inline:4.4.0'
     testImplementation "androidx.arch.core:core-testing:2.1.0" // InstantTaskExecutorRule
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1" //TestCoroutineDispatcher
+    testImplementation("org.assertj:assertj-core:3.23.1")
 
     //dagger hilt
     implementation "com.google.dagger:hilt-android:2.44"
