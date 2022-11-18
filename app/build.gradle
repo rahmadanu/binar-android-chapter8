@@ -14,10 +14,10 @@ plugins {
 android {
     signingConfigs {
         release {
-            /*storeFile file('C:\\Users\\sadew\\AndroidStudioProjects\\binar-android-chapter7\\app\\keystorechapter7.jks')
+            storeFile file('C:\\Users\\sadew\\AndroidStudioProjects\\binar-android-chapter7\\app\\keystorechapter7.jks')
             storePassword 'keystorechapter7'
             keyAlias 'keystorechapter7'
-            keyPassword 'keystorechapter7'*/
+            keyPassword 'keystorechapter7'
         }
     }
     namespace 'com.binar.movieapp'
