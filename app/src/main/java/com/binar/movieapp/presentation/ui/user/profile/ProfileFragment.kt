@@ -1,5 +1,6 @@
 package com.binar.movieapp.presentation.ui.user.profile
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -27,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@SuppressLint("all")
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
@@ -48,12 +50,14 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         observeData()
         setOnClickListener()
         viewModel.outputWorkInfos.observe(viewLifecycleOwner, workInfosObserver())
+        binding.tvEmail.text = "Email address"
     }
 
     private fun setOnClickListener() {
