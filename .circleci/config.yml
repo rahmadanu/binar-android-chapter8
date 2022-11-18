@@ -22,7 +22,7 @@ jobs:
           command: "echo Hello, World!"
 
   build:
-    executor: android/android
+    executor: android/android-machine
     steps:
       - checkout
       - restore_cache:
