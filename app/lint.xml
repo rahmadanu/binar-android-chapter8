@@ -1,0 +1,5 @@
+<lint>f
+    <issue id="HardcodedText" severity="warning">
+        <ignore path="res/layout/fragment_login.xml" />
+    </issue>
+</lint>
