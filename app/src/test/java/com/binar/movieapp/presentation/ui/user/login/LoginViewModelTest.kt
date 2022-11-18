@@ -22,6 +22,7 @@ import kotlinx.coroutines.test.setMain
 import org.junit.*
 import org.junit.runner.RunWith
 
+/*
 
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
@@ -73,4 +74,4 @@ class LoginViewModelTest {
     fun tearDown() {
         Dispatchers.resetMain()
     }
-}
+}*/

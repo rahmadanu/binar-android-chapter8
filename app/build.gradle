@@ -13,20 +13,21 @@ plugins {
 
 android {
     signingConfigs {
-        release {
-            storeFile file('C:\\Users\\sadew\\AndroidStudioProjects\\binar-android-chapter7\\app\\keystorechapter7.jks')
-            storePassword 'keystorechapter7'
-            keyAlias 'keystorechapter7'
-            keyPassword 'keystorechapter7'
-        }
+        /*release {
+
+        storeFile file('C:\\Users\\sadew\\AndroidStudioProjects\\binar-android-chapter8\\app\\keystorechapter8.jks')
+            storePassword 'keystorechapter8'
+            keyAlias 'keystorechapter8'
+            keyPassword 'keystorechapter8'
+        }*/
     }
     namespace 'com.binar.movieapp'
-    compileSdk 32
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId "com.binar.movieapp"
-        minSdk 21
-        targetSdk 32
+        minSdkVersion 21
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
 
@@ -41,7 +42,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -110,6 +112,7 @@ dependencies {
     testImplementation 'org.mockito:mockito-inline:4.4.0'
     testImplementation "androidx.arch.core:core-testing:2.1.0" // InstantTaskExecutorRule
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1" //TestCoroutineDispatcher
+    testImplementation("org.assertj:assertj-core:3.23.1")
 
     //dagger hilt
     implementation "com.google.dagger:hilt-android:2.44"
