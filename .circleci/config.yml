@@ -22,7 +22,8 @@ jobs:
           command: "echo Hello, World!"
 
   build:
-    name: android/android-machine
+    executor:
+      name: android/android-machine
       resource-class: large
       tag: 2021.10.1
     steps:
