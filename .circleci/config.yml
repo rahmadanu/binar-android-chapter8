@@ -53,7 +53,7 @@ jobs:
           command: ./gradlew build
       - run:
           name: Build apk
-          command: ./gradlew assembleRelease
+          command: ./gradlew assembleDebug
       - run:
           name: Run Tests
           command: ./gradlew lint test
