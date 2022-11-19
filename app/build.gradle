@@ -13,13 +13,13 @@ plugins {
 
 android {
     signingConfigs {
-        release {
+        /*release {
 
         storeFile file('C:\\Users\\sadew\\AndroidStudioProjects\\binar-android-chapter8\\app\\keystorechapter8.jks')
             storePassword 'keystorechapter8'
             keyAlias 'keystorechapter8'
             keyPassword 'keystorechapter8'
-        }
+        }*/
 
     }
     namespace 'com.binar.movieapp'
@@ -43,8 +43,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            //signingConfig signingConfigs.debug
+            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
