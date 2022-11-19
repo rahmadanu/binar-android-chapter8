@@ -48,7 +48,7 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
-      -run: echo $RELEASE_KEYSTORE_BASE64 | base64 -d > .signing/release.jks
+      - run: echo $RELEASE_KEYSTORE_BASE64 | base64 -d > .signing/release.jks
       - run:
           name: Run Build
           command: ./gradlew build
