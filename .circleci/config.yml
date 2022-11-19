@@ -47,9 +47,9 @@ jobs:
       - store_test_results:
           path: app/build/test-results
       - store_artifacts:
-          paths:
-            - ~/app/build/outputs/apk/productionFree/release/
-            - ~/app/build/outputs/apk/productionPremium/release/
+          path:
+            - app/build/outputs/apk/productionFree/release/
+            - app/build/outputs/apk/productionPremium/release/
           destination: artifact-file
 
 # Invoke jobs via workflows
