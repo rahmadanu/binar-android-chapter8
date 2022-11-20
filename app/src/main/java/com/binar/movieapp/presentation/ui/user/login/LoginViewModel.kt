@@ -1,5 +1,6 @@
 package com.binar.movieapp.presentation.ui.user.login
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val repository: UserRepository) : ViewModel(){
 
+    @SuppressLint("Typo")
     fun createUserWithEmailAndPassword(username: String, email: String, password: String) {
             repository.createUserWithEmailAndPassword(username, email, password)
             Log.d("signin", username + password)

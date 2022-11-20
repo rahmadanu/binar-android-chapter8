@@ -1,5 +1,6 @@
 <lint>f
-    <issue id="HardcodedText" severity="warning">
+    <issue id="HardcodedText" severity="error">
         <ignore path="res/layout/fragment_profile.xml" />
     </issue>
+    <issue id="Autofill" severity="ignore" />
 </lint>
