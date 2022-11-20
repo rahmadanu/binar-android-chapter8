@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.binar.movieapp.free",
+  "variantName": "productionFreeDebug",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 1,
+      "versionName": "1.0.free",
+      "outputFile": "app-production-free-debug.apk"
+    }
+  ],
+  "elementType": "File"
+}
