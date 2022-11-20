@@ -42,6 +42,9 @@ jobs:
           name: Build aab
           command: ./gradlew bundleRelease
       - run:
+          name: Build apk
+          command: ./gradlew bundleRelease
+      - run:
           name: Run Tests
           command: ./gradlew lint test
       - store_artifacts:
