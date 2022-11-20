@@ -43,7 +43,7 @@ jobs:
           command: ./gradlew bundleRelease
       - run:
           name: Build apk
-          command: ./gradlew bundleRelease
+          command: ./gradlew assembleRelease
       - run:
           name: Run Tests
           command: ./gradlew lint test
